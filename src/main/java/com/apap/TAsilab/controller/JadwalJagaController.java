@@ -38,13 +38,13 @@ public class JadwalJagaController {
 	private JadwalJagaService jadwalJagaService;
 	
 	@Autowired
-	RestTemplate restTemplate1;
+	RestTemplate restTemplate;
 
 
 	private List<StaffDetail> getAllStaff() throws Exception{
 		String path = Setting.allStaffUrl;
 		List<StaffDetail> listDataStaff = new ArrayList<StaffDetail>();	
-		String responsenya = restTemplate1.getForEntity(path, String.class).getBody();
+		String responsenya = restTemplate.getForEntity(path, String.class).getBody();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(responsenya);
 		JsonNode result = node.get("result");
