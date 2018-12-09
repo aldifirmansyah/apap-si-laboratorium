@@ -58,24 +58,13 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		}
 		return mapPasien;
 	}
-	
-//	@Override
-//	public Map<Integer, KamarDetail> getRoom() throws ParseException {
-//		Map<Integer, KamarDetail> mapKamar = new HashMap<Integer, KamarDetail>();
-//		List<PemeriksaanModel> listPemeriksaan = pemeriksaanDb.findAll();
-//		for (PemeriksaanModel pemeriksaan : listPemeriksaan){
-//			KamarDetail kamar = this.getKamar((int)pemeriksaan.getIdPasien());
-//			mapKamar.put(pemeriksaan.getId(), kamar);
-//		}
-//		
-//		return mapKamar;
-//	}
+
 	
 //	@Override
 //	public KamarDetail getKamar(int idPasien) throws ParseException {
 //		KamarDetail kamar = new KamarDetail();
 //		JSONParser parser = new JSONParser();
-//		String response = restTemplate.getForObject("http://si-rawatInap.herokuapp.com/api/get-all-kamar", String.class);
+//		String response = restTemplate.getForObject("http://siranap.herokuapp.com/api/get-all-kamar", String.class);
 //        JSONObject json = (JSONObject) parser.parse(response);
 //        JSONObject result = (JSONObject) json.get("result");
 //        int requestPasien = (int) result.get("id");
