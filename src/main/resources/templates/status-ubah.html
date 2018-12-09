@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
+<head>
+    <object th:include="components/basepage :: title" th:remove="tag"></object>
+</head>
+<body>
+	<div id="Content" class="container-full-bg">
+        <div class="jumbotron vertical-center" style="margin-bottom:0px;">
+            <div class="container">
+            	<div>
+					<h3 th:text="${msg}"></h3>
+				</div>
+				<div  align="center">
+					<a th:href="@{'/lab/jadwal-jaga/' + ${newJadwalJaga.tanggal}}" class="btn btn-primary" role="button">Lihat Jadwal Pada Tanggal Updated</a>
+					<br><br>					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

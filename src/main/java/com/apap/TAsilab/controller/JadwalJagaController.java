@@ -265,20 +265,6 @@ public class JadwalJagaController {
 	@RequestMapping(value = "/lab/jadwal-jaga/ubah/{id}", method = RequestMethod.POST)
 	public String ubahJadwalJagaSubmit(@PathVariable(value="id") int id, Model model, @ModelAttribute JadwalJagaModel newJadwalJaga) throws ParseException{
 		
-//		//ini untuk handle agar date yang dimasukkan bukan date yang sudah berlalu
-//		//kenapa yg di cek jadwal yg lama bukan jadwal yg barunya?
-//		if (newJadwalJaga.getTanggal().before(new Date())) {
-//			model.addAttribute("msg", "date yang dimasukkan sudah berlalu");
-//			return "failed-date-passed";
-//		}
-//		else {
-//			jadwalJagaService.ubahJadwalJaga(newJadwalJaga.getId(), newJadwalJaga);
-//			model.addAttribute("msg", "jadwal berhasil diubah");
-//			return "success-page";
-//		}	
-
-		String msg = "";
-		
 		//cek date
 		LocalDate current = LocalDate.now();
 		LocalTime currentTime = LocalTime.now();
@@ -300,11 +286,13 @@ public class JadwalJagaController {
 		java.sql.Time inputWaktuSelesai = new java.sql.Time(parseWaktuSelesai.getTime());
 		java.sql.Time inputWaktuMulai = new java.sql.Time(parseWaktuMulai.getTime());
 		
+		model.addAttribute("newJadwalJaga", newJadwalJaga);
+		
 		if(isAfter) {
 			
 			if(inputWaktuSelesai.before(inputWaktuMulai)) {
 				model.addAttribute("msg", "tolong masukkan jam selesai setelah jam mulai");
-				return "failed-date-passed";
+				return "status-ubah";
 			}
 			else {
 				
@@ -317,21 +305,13 @@ public class JadwalJagaController {
 				}
 				
 				jadwalJagaService.addJadwalJaga(newJadwalJaga);
-				msg = "jadwal jaga berhasil di update";
+				model.addAttribute("msg", "jadwal jaga berhasil di update");
+				return "status-ubah";
 			}			
 			
 		}
 		else {	
 			if(isEqual) {
-//				try {
-//					restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-//					//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
-//				}
-//				catch(Exception e) {
-//					
-//				}
-//				jadwalJagaService.addJadwalJaga(newJadwalJaga);
-//				msg = "jadwal jaga berhasil di update";
 								
 				String strInputTime = newJadwalJaga.getWaktuMulai();
 				Date strParse=new SimpleDateFormat("hh:mm").parse(strInputTime);
@@ -346,7 +326,8 @@ public class JadwalJagaController {
 				 if(!timeBefore) {
 					 if(inputWaktuSelesai.before(inputWaktuMulai)) {
 							model.addAttribute("msg", "tolong masukkan jam selesai setelah jam mulai");
-							return "failed-date-passed";
+							return "status-ubah";
+							
 						}
 						else {
 							
@@ -359,21 +340,20 @@ public class JadwalJagaController {
 							}
 							
 							jadwalJagaService.addJadwalJaga(newJadwalJaga);
-							msg = "jadwal jaga berhasil di update";
+							model.addAttribute("msg", "jadwal jaga berhasil di update");
+							return "status-ubah";
 						}
 				 }
 				 else {
-					 msg = "jadwal jaga memiliki jam mulai yang dimasukkan sudah berlalu" + ". ";
+					 model.addAttribute("msg", "jadwal jaga memiliki jam mulai yang dimasukkan sudah berlalu");
+					 return "status-ubah";
 				 }
 			}
 			else {
-				msg = "jadwal jaga tidak berhasil di update, date sudah berlalu";
+				model.addAttribute("msg", "jadwal jaga tidak berhasil di update, date sudah berlalu");
+				return "status-ubah";
 			}
 		}
-							
-		model.addAttribute("msg", msg);
-		return "success-page";
-		
 	}	
 	
 	
