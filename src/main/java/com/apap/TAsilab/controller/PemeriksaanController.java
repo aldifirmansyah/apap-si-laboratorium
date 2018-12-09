@@ -49,10 +49,10 @@ public class PemeriksaanController {
 	JadwalJagaService jadwalService;
 	
 	@Autowired
-	RestTemplate restTemplate;
+	RestTemplate restTemplate2;
 	
 	@Bean
-	public RestTemplate rest() {
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 	
@@ -67,7 +67,7 @@ public class PemeriksaanController {
 		hasil.setTanggalPengajuan(pemeriksaan.getTanggalPengajuan());
 		hasil.setPasien(pasien);
 		try {
-			restTemplate.postForObject("http://si-appointment.herokuapp.com/api/03/addLabResult", hasil, ResponseEntity.class);
+			restTemplate2.postForObject("http://si-appointment.herokuapp.com/api/03/addLabResult", hasil, ResponseEntity.class);
 			return "lihat-daftar-pemeriksaan";
 		}
 		catch(Exception e) {
