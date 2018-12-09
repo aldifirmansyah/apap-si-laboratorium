@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
 
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+   
 </head>	
 
 <body>
@@ -10,7 +10,7 @@
 		<div class="card-body">
 			<h5>Pilih Tanggal Jadwal Jaga</h5>
 			
-			<form th:action="@{'/lab/jadwal-jaga/'}"  method="GET" id="myform">
+			<form th:action="@{/lab/jadwal-jaga/}"  method="GET" id="myform">
 				<div class="form-gorup-row">
 					<label for="nama" class="col-sm-1 col-form-label">Tanggal</label>
 					<div class="col-sm-2">
@@ -20,18 +20,17 @@
 				</div>
 			</form>		
 		</div>
+		<script>
+			$(document).ready(function(){
+				$('#myform').on('submit', function(e){
+					$(this).attr('action', $(this).attr('action') + $('#date').val());
+					console.log($(this).attr('action'));
+					$('#date').prop("disabled", true);
+					return true;
+				})
+			})
+		</script>
 	</div>
 </body>
-
-<script th:inline="javascript">
-	var $form = $('#myForm');
-	var $datefield = $('#date');
-	
-	$form.submit(function(event){
-		$form.attr('action', $form.attr('action') + $dateField.val());
-		$dateField.prop("disabled", true);
-		return;
-	});
-</script>
 
 </html>
