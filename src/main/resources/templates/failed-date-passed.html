@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
+<head>
+    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+</head>
+<body>
+	<div id="Content" class="container-full-bg">
+        <div class="jumbotron vertical-center" style="margin-bottom:0px;">
+            <div class="container">
+            	<div>
+					<h3 th:text="${msg}"></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+
+<head>
+    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+</head>	
+
+<body>
+	<div id="Content" class="container-full-bg">
+		<div class="card-body">
+			<h5>Pilih Tanggal Jadwal Jaga</h5>
+			
+			<form th:action="@{'/lab/jadwal-jaga/'}"  method="GET" id="myform">
+				<div class="form-gorup-row">
+					<label for="nama" class="col-sm-1 col-form-label">Tanggal</label>
+					<div class="col-sm-2">
+						<input type = "date" name="date" id="date" class="form-control" >
+					</div>
+					<input type="submit" class="btn btn-primary">
+				</div>
+			</form>		
+		</div>
+	</div>
+</body>
+
+<script th:inline="javascript">
+	var $form = $('#myForm');
+	var $datefield = $('#date');
+	
+	$form.submit(function(event){
+		$form.attr('action', $form.attr('action') + $dateField.val());
+		$dateField.prop("disabled", true);
+		return;
+	});
+</script>
+
+</html>

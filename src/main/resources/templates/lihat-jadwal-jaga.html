@@ -3,19 +3,62 @@
 
 <head>
     <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    
+    <!-- pagination -->
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{//cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css}"/> 
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+	
+	<script>
+	$(document).ready( function () {
+	    $('#searchResult').DataTable();
+	} );
+	</script>
+	
 </head>	
 
 <body>
 	<div id="Content" class="container-full-bg">
-		<!-- <tr th:each="jadwal : ${listJadwal}">
-			<td th:text="${jadwal.tanggal}"></td>
-			<td th:text="${jadwal.waktuMulai}"></td>
-			<td th:text="${jadwal.waktuSelesai}"></td>
-			<div th:each="staffX : ${listStaff}">
-				<div th:if= "$(jadwal.idStaff} == ${staffX.id}")>
-					<td th:text="${staffX.nama}"></td>
-				</div>				
+		<div class="card-header" align="center">
+			<h3 th:text="'Jadwal Jaga'"></h3>	
+			<!-- <p th:text="${tanggal}"/>	 -->	
+		</div>			
+		<!-- <span th:if="!${jadwalJagaKosong}"> -->
+			<div class="card-body">
+				<table class="table table-borderless">
+					<thead>
+							<tr align="center">		
+								<th style="vertical-align: middle">Jam mulai</th>
+								<th style="vertical-align: middle">Jam selesai</th>
+								<th style="vertical-align: middle">Nama Staff</th>
+							</tr>					
+						</thead>
+						<tbody>
+							<!-- <span th:each="jadwal : *{jadwalJaga}"> -->
+								<tr th:each="jadwalJaga : ${listJadwalJaga}">									
+									<td align="center" th:text="${jadwalJaga.waktuMulai}"></td>
+									<td align="center" th:text="${jadwalJaga.waktuSelesai}"></td>
+									<td align="center" th:text="${infoStaff[__${jadwalJaga.idStaff}__]}">
+								</tr>
+						<!-- 	</span>	 -->						
+						</tbody>
+				</table>
 			</div>
-		</tr>	 -->		
+			<div  align="center">
+				<button class="btn btn-primary" onclick="location.href='/lab/jadwal-jaga/tambah'">Tambah Staf Jaga</button>
+				<br><br>					
+			</div>
+		<!-- </span> -->
 	</div>
+	
+	<script>
+	$(document).ready( function () {
+	    $('#searchResult').DataTable()({
+	    	"pagingType" : "full_numberss"
+	    });
+	} );
+	</script>
+	
 </body>

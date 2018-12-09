@@ -107,8 +107,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		else if(pemeriksaan.getStatus()==2) {
 			pemeriksaan.setHasil(pemeriksaan.getHasil());
 		}
-		
-		JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getId());
+		JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getJenisPemeriksaan().getId());
 		for (LabSuppliesModel a: jp.getListSupplies()){
 			a.setJumlah(a.getJumlah()-1);
 		}
@@ -116,5 +115,12 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		pemeriksaan.setTanggalPemeriksaan(pemeriksaan.getTanggalPemeriksaan());
 		pemeriksaan.setStatus(pemeriksaan.getStatus());
 		pemeriksaanDb.save(pemeriksaan);
+	}
+
+	@Override
+	public void delete(PemeriksaanModel pemeriksaan) {
+		// TODO Auto-generated method stub
+		pemeriksaanDb.delete(pemeriksaan);
+		
 	}
 }

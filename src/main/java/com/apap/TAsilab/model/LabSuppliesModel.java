@@ -17,8 +17,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "lab_supplies")
+@JsonIgnoreProperties(ignoreUnknown=true, value={"hibernateLazyInitializer", "handler"})
 public class LabSuppliesModel implements Serializable {
 	// Abaikan attribute ini
 	/**
@@ -49,9 +53,11 @@ public class LabSuppliesModel implements Serializable {
     private String deskripsi;
     
     @OneToMany(mappedBy = "reagen", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<KebutuhanReagenModel> listKebutuhanReagen;
     
     @ManyToMany(mappedBy = "listSupplies")
+    @JsonIgnore
     private List<JenisPemeriksaanModel> listJenisPemeriksaan = new ArrayList<>();
 
 	public int getId() {

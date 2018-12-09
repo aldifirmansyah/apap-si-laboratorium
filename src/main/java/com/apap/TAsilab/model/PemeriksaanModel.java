@@ -49,8 +49,8 @@ public class PemeriksaanModel implements Serializable {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private JenisPemeriksaanModel jenisPemeriksaan;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_jadwal_jaga", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_jadwal_jaga", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private JadwalJagaModel jadwalJaga;
     

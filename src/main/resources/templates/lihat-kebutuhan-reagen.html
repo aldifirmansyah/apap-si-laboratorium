@@ -3,52 +3,56 @@
 <head>
     <object th:include="components/BasePage :: title" th:remove="tag"></object>
 </head>	
-	<body>
+<body>
 	<div id="Content" class="container-full-bg">
 		<br>
 		<div class="container">
 			<h2 class="card-header" th:text="${header}" style="text-align:center"></h2>
 			<br>
 			<div class="container vertical-center" style="padding-top:32px;">
-			
-<!-- Create Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createReagenModal">
-  Tambah Baru
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="createReagenModal" tabindex="-1" role="dialog" aria-labelledby="createReagenModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Kebutuhan Reagen</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form th:action="@{/lab/kebutuhan/tambah/}" th:object="${kebutuhanReagen}" method="POST">
-      <div class="modal-body">
-		<div class="form-group">
-			<label>Reagen</label>
-			<select class="form-control" name="reagen.id" required>
-				<option value="">-Pilih Reagen-</option>
-				<option th:each="reagen: ${listReagen}" th:value="${reagen.id}" th:text="${reagen.nama}"></option>
-			</select>
+	<!-- Button tambah baru untuk role STAFF -->
+	<div th:if="${role} == 'STAFF'">		
+		<!-- Create Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createReagenModal">
+		  Tambah Baru
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="createReagenModal" tabindex="-1" role="dialog" aria-labelledby="createReagenModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Tambah Kebutuhan Reagen</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form th:action="@{/lab/kebutuhan/tambah/}" th:object="${kebutuhanReagen}" method="POST">
+		      <div class="modal-body">
+				<div class="form-group">
+					<label>Reagen</label>
+					<select class="form-control" name="reagen.id" required>
+						<option value="">-Pilih Reagen-</option>
+						<option th:each="reagen: ${listReagen}" th:value="${reagen.id}" th:text="${reagen.nama}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Jumlah</label>
+					<input class="form-control" type="number" name="jumlah" required>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+		        <button type="submit" class="btn btn-primary">Simpan</button>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
 		</div>
-		<div class="form-group">
-			<label>Jumlah</label>
-			<input class="form-control" type="number" name="jumlah" required>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- /Modal -->
+		<!-- /Modal -->
+	</div>
+	<!-- /Button tambah untuk STAFF -->
 
 		        <div class="table-responsive table">
 		        	<table class="table table-hover" id="myTable">
@@ -67,11 +71,13 @@
 								<div th:if="${reagen.status==1}" th:text="'Tidak Aktif/Telah dibeli'"></div>
 							</td>
 							<td th:text="${reagen.tanggalUpdate}"></td>
-							<td>
-								<form id="update" th:action="@{/lab/kebutuhan/ubah} + ${reagen.id}" method="GET">
-									<button id="updateButton" class="btn btn-danger" type="submit">Update</button>	
-								</form>
-							</td>
+							<div th:if="${role} == 'ADMIN'">
+								<td>
+									<form id="update" th:action="@{/lab/kebutuhan/ubah/} + ${reagen.id}" method="GET">
+										<button id="updateButton" class="btn btn-danger" type="submit">Update</button>	
+									</form>
+								</td>
+							</div>
 						</tr>
 		     		</tbody>
 		        	</table>
@@ -79,5 +85,5 @@
 		    </div>
 		</div>
 	</div>
-	</body>
+</body>
 </html>

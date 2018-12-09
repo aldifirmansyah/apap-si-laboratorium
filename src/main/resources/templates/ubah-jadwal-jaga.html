@@ -7,6 +7,43 @@
 
 <body>
 	<div id="Content" class="container-full-bg">
-		
+		<div class="col-5">
+			<h3>Ubah Jadwal Jaga</h3>
+			<form th:action="@{/lab/jadwal-jaga/ubah/{id} (id=${oldJadwalJaga.id})}" th:object="${newJadwalJaga}" method="POST">
+			<!-- <input type="hidden" name="id" th:value="*{oldJadwalJaga.id}" /> -->
+				<div class="form-group row">
+					<label for="tanggal" class="col-sm-3 col-form-label-md">Tanggal</label>
+					<div class="col-sm-9">
+						<input type="date" name="tanggal" required class="form-control" id="tanggal" th:field="${oldJadwalJaga.tanggal}"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="jam_mulai" class="col-sm-3 col-form-label-md">Jam mulai</label> <!-- Jam mulai nama yang di tampilin -->
+					<div class="col-sm-9">
+						<input type="time" name="waktuMulai" required class="form-control" id="waktu_mulai" th:field="${oldJadwalJaga.waktuMulai}"/>
+						<!-- waktuMulai itu nama di Jadwaljagamodel
+						waktu_mulai itu nama di db nya -->
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="jam_selesai" class="col-sm-3 col-form-label-md">Jam selesai</label>
+					<div class="col-sm-9">
+						<input type="time" name="waktuSelesai" required class="form-control" id="waktu_selesai" th:field="${oldJadwalJaga.waktuSelesai}"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="id_staff" class="col-sm-3 col-form-label-md">Nama Staff</label>
+					<select class="form-control" required="required" name="idStaff" id="staff">
+						<option disabled="disabled" selected="selected" th:text=${staffJaga} >Pilih Staff</option>
+						<option th:each="staff : ${listStaff}" th:value="${staff.id}" th:text="${staff.nama}"></option>
+					</select>
+				</div>
+				<!-- <input type="hidden" name="id" th:value="${jadwalJaga.id}"> -->
+				<button type="submit" class="btn btn-primary mb-2">Simpan</button>
+							
+					
+			
+			</form>
+		</div>		
 	</div>
 </body>
