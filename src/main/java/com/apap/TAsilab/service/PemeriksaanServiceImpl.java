@@ -30,8 +30,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	@Autowired
 	private PemeriksaanDB pemeriksaanDb;
 	
-	@Autowired
-	private RestTemplate restTemplate;
+	private RestTemplate restTemplate = new RestTemplate();
 	
 	@Autowired
 	private JadwalJagaDB jadwalJagaDb;
