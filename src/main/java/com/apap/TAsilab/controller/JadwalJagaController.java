@@ -36,13 +36,9 @@ public class JadwalJagaController {
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
 	
-	@Autowired
-	RestTemplate restTemplate;
 	
-	@Bean
-	public RestTemplate rest() {
-		return new RestTemplate();
-	}
+	private RestTemplate restTemplate = new RestTemplate();
+
 
 	private List<StaffDetail> getAllStaff() throws Exception{
 		String path = Setting.allStaffUrl;
@@ -166,7 +162,7 @@ public class JadwalJagaController {
 					
 					try {
 						restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
-						//link diganti sama web service yg dibuat igd
+						//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 					}
 					catch(Exception e) {
 						
@@ -200,7 +196,7 @@ public class JadwalJagaController {
 								
 								try {
 									restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
-									//link diganti sama web service yg dibuat igd
+									//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 								}
 								catch(Exception e) {
 									
@@ -314,7 +310,7 @@ public class JadwalJagaController {
 				
 				try {
 					restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-					//link diganti sama web service yg dibuat igd
+					//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 				}
 				catch(Exception e) {
 					
@@ -329,7 +325,7 @@ public class JadwalJagaController {
 			if(isEqual) {
 //				try {
 //					restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-//					//link diganti sama web service yg dibuat igd
+//					//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 //				}
 //				catch(Exception e) {
 //					
@@ -356,7 +352,7 @@ public class JadwalJagaController {
 							
 							try {
 								restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-								//link diganti sama web service yg dibuat igd
+								//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 							}
 							catch(Exception e) {
 								

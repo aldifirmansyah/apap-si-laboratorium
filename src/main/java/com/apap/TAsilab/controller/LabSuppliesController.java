@@ -1,6 +1,7 @@
 package com.apap.TAsilab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,12 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.apap.TAsilab.model.LabSuppliesModel;
+import com.apap.TAsilab.model.UserRoleModel;
 import com.apap.TAsilab.service.LabSuppliesService;
+import com.apap.TAsilab.service.UserRoleService;
 
 @Controller
 public class LabSuppliesController {
 	@Autowired
 	private LabSuppliesService labSupService;
+	
+	@Autowired
+	private UserRoleService userService;
 
 	@RequestMapping(value = "/lab/stok/tambah", method = RequestMethod.GET)
 	public String tambahStok(Model model) {
@@ -30,6 +36,8 @@ public class LabSuppliesController {
 	}
 	@RequestMapping("/lab/stok")
 	public String lihatStok(Model model) {
+		UserRoleModel user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());	
+		model.addAttribute("role", user.getRole());
 		model.addAttribute("allSupplies", labSupService.getListSupplies());
 		return "allPersediaan";
 	}

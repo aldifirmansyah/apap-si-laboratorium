@@ -40,13 +40,7 @@ public class ApiController {
 	@Autowired
 	JadwalJagaDB jadwalDb;
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+	private RestTemplate restTemplate = new RestTemplate();
 	/*
 	 * API Untuk
 	 * Menerima request pemeriksaan
