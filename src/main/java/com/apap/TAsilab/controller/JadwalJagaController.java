@@ -38,17 +38,17 @@ public class JadwalJagaController {
 	private JadwalJagaService jadwalJagaService;
 	
 	@Autowired
-	RestTemplate restTemplate;
+	RestTemplate restTemplate3;
 	
 	@Bean
-	public RestTemplate rest() {
+	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
 	private List<StaffDetail> getAllStaff() throws Exception{
 		String path = Setting.allStaffUrl;
 		List<StaffDetail> listDataStaff = new ArrayList<StaffDetail>();	
-		String responsenya = restTemplate.getForEntity(path, String.class).getBody();
+		String responsenya = restTemplate3.getForEntity(path, String.class).getBody();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode node = mapper.readTree(responsenya);
 		JsonNode result = node.get("result");
@@ -103,7 +103,7 @@ public class JadwalJagaController {
 		}
 		else {
 			try {
-				restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", jadwalJaga, ResponseEntity.class);
+				restTemplate3.postForObject("http://localhost:6060/testing/kirim-jadwal", jadwalJaga, ResponseEntity.class);
 				//link diganti sama web service yg dibuat igd
 			}
 			catch(Exception e) {
