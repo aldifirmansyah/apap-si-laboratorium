@@ -48,13 +48,8 @@ public class PemeriksaanController {
 	@Autowired
 	JadwalJagaService jadwalService;
 	
-	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate = new RestTemplate();
 	
-	@Bean
-	public RestTemplate rest() {
-		return new RestTemplate();
-	}
 	
 	@PostMapping(value="/kirim/hasil-lab")
 	public String addLabResult(@RequestParam (value="id") int id) {

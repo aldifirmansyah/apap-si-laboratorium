@@ -1,13 +1,17 @@
 package com.apap.TAsilab.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.apap.TAsilab.model.UserRoleModel;
 import com.apap.TAsilab.repository.UserRoleDB;
 
 @Service
+@Transactional
+@Qualifier(value= "UserRoleServiceImpl")
 public class UserRoleServiceImpl implements UserRoleService{
 	
 	@Autowired
