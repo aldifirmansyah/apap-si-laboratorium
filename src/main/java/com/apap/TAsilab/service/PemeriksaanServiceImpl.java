@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -78,20 +79,49 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	
 	@Override
 	public List<KamarDetail> getAllKamar() throws ParseException {
-		KamarDetail response = restTemplate.getForObject("http://siranap.herokuapp.com/api/get-all-kamar", KamarDetail.class);
-		List<KamarDetail> kamar = new ArrayList<KamarDetail>();
-		for(int i=0;i<response.getResult().size();i++) {
-			kamar.add(response.getResult().get(i));
-		}
 		
+		String response = restTemplate.getForObject("http://siranap.herokuapp.com/api/get-all-kamar", String.class);
+		List<KamarDetail> kamar = new ArrayList<KamarDetail>();
+		JSONParser parser = new JSONParser();
+		
+		
+		JSONObject json = (JSONObject) parser.parse(response);
+		JSONObject json2 = loadJSONObject(json);
+		JSONArray jArray = (JSONArray) json2.get("result");
+		System.out.println(jArray.size());
+//		JSONObject result = (JSONObject) json.get("result");
+//      System.out.println(result.size());
+        for(int i = 0 ;i<jArray.size();i++) {
+        	JSONObject data = (JSONObject) jArray.get(i);
+        	KamarDetail kamarDetail = new KamarDetail();
+        	int requestPasien = Integer.parseInt(data.get("id").toString());
+            int id_pasien = Integer.parseInt(data.get("pasien").toString());
+            int assignKamar = Integer.parseInt(data.get("assign").toString());
+            kamarDetail.setIdPasien(id_pasien);
+            kamarDetail.setRequestPasien(requestPasien);
+            kamarDetail.setAssignKamar(assignKamar);
+        	kamar.add(kamarDetail);
+        }
+        	
         return kamar;
 	}
+	private JSONObject loadJSONObject(JSONObject json) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public void addPemeriksaanDarah() throws ParseException {
+		System.out.println("masuk add");
+		System.out.println(this.getAllKamar().size());
 		for(PemeriksaanModel pemeriksaan : this.findAll()) {
+			System.out.println(pemeriksaan.getIdPasien());
 			for(int i = 0;i<this.getAllKamar().size();i++) {
+				System.out.println(this.getAllKamar().get(i).getIdPasien());
 				if(pemeriksaan.getIdPasien()==this.getAllKamar().get(i).getIdPasien()) {
+					System.out.println("masuk id sama");
 					if(!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")){
+						System.out.println("masuk bukan darah");
 						java.util.Date utilDate = new java.util.Date();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
@@ -109,6 +139,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 					}
 				}else {
 					if(pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")){
+						System.out.println("masuk darah");
 						java.util.Date utilDate = new java.util.Date();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();

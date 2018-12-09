@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    
 </head>	
 <body>
 	<div id="Content" class="container-full-bg">
@@ -64,7 +64,7 @@
 		        		</thead>
 		        		<tbody>
 		     			<tr th:each="reagen : *{listKebutuhanReagen}">
-							<td th:text="${reagen.id}"></td>
+							<td th:text="${reagen.reagen.id}"></td>
 							<td th:text="${reagen.jumlah}"></td>
 							<td>
 								<div th:if="${reagen.status==0}" th:text="'Aktif/Belum Beli'"></div>
