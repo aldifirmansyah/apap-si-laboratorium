@@ -26,8 +26,6 @@ public class PageController {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		UserRoleModel user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		String message = "";
 		return "home";
 	}
 	
