@@ -11,12 +11,13 @@
 		    <h1>Sistem Informasi Laboratorium</h1>
 		    <hr class="my-4">      
 		    <p>Layanan laboratorium Rumah Sakit Anaperancis</p>
+		    <p th:text="${role}"></p>
 		  </div>
 		</div>
 		
 		<div class="container">
 		  <div class="card-deck">
-		  	<div class="card" style="width:400px">
+		  	<div class="card" style="width:300px">
 			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
 			    <div class="card-body">
 			      <h4 class="card-title">Perencanaan Kebutuhan Reagen</h4>
@@ -24,7 +25,7 @@
 			      <a href="/lab/kebutuhan/" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>
-  			<div class="card" style="width:400px">
+  			<div class="card" style="width:300px">
 			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
 			    <div class="card-body">
 			      <h4 class="card-title">Data Persediaan Lab</h4>
@@ -32,7 +33,7 @@
 			      <a href="/lab/stok" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>
-  			<div class="card" style="width:400px">
+  			<div class="card" style="width:300px">
 			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
 			    <div class="card-body">
 			      <h4 class="card-title">Jadwal Staff Jaga</h4>
@@ -40,9 +41,7 @@
 			      <a href="/lab/jadwal-jaga/tambah" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>
-		  </div>
-		  <div class="card-deck">
-		  	<div class="card" style="width:100px">
+  			<div class="card" style="width:300px">
 			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
 			    <div class="card-body">
 			      <h4 class="card-title">Daftar Permintaan Pemeriksaan</h4>

@@ -40,11 +40,6 @@ public class UserRoleController {
 		return "login";
 	}
 	
-	@RequestMapping("/updatePassword")
-	public String updatePassword() {
-		return "update-password";
-	}
-	
 	public boolean validatePassword(String password) {
 		if (password.length()>=8 && Pattern.compile("[0-9]").matcher(password).find() &&  Pattern.compile("[a-zA-Z]").matcher(password).find())  {
 			return true;
@@ -53,36 +48,5 @@ public class UserRoleController {
 			return false;
 		}
 	}
-	/*
-	@RequestMapping(value="/passwordSubmit",method=RequestMethod.POST)
-	public String updatePasswordSubmit(@ModelAttribute PasswordModel pass, Model model, RedirectAttributes redirectAttrs) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		UserRoleModel user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		String message = "";
-		
-		if (pass.getConPassword().equals(pass.getNewPassword())) {
-			
-			if (passwordEncoder.matches(pass.getOldPassword(), user.getPassword())) {
-				if (validatePassword(pass.getNewPassword())) {
-					userService.changePassword(user, pass.getNewPassword());
-					message = "password berhasil diubah";
-				}
-				else {
-					message = "password baru anda belum sesuai ketentuan: lebih dari 8 karakter, mengandung minimal 1 huruf dan 1 angka";
-				}
-				
-			}
-			else {
-				message = "password lama anda salah";
-			}
-			
-		}
-		else {
-			message = "password baru tidak sesuai";
-		}
-		
-		redirectAttrs.addFlashAttribute("message", message);
-		return "redirect:/user/updatePassword";
-	}*/
 	
 }

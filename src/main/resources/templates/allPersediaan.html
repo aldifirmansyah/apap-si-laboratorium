@@ -14,9 +14,6 @@
 	</div>
 	<div class="container">
 		<a href="/lab/stok/tambah" class="btn btn-primary">Tambah Data Persediaan Lab</a>
-		<br>
-		<br>
-		<h4 th:text="${msg}"></h4>
   	</div>
     <div class="container vertical-center" style="padding-top:32px;">
         <div class="table-responsive table">
@@ -27,7 +24,8 @@
         			<th>Nama</th>
         			<th>Jumlah</th>
         			<th>Deskripsi</th>
-        			<th></th>
+        			<th>Pesan</th>
+        			<th>Update</th>
         		</thead>
         		<tbody>
      			<tr  th:each  = "supplies : ${allSupplies}" >
@@ -36,6 +34,8 @@
      				<td th:text="${supplies.nama}"></td>
      				<td th:text="${supplies.jumlah}"></td>
      				<td th:text="${supplies.deskripsi}"></td>
+     				<td th:if="${supplies.jumlah == 0 && supplies.jenis == 'Reagen'}">Stok Kosong, Tambah!</td>
+     				<td th:unless="${supplies.jumlah == 0 && supplies.jenis == 'Reagen'}"></td>
      				<td><a th:href="@{'/lab/stok/ubah/' +${supplies.id}}" class="button">Update</a></td>
      			</tr>
      		</tbody>
