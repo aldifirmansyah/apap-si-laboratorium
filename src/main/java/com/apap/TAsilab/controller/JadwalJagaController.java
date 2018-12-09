@@ -99,7 +99,7 @@ public class JadwalJagaController {
 		}
 		else {
 			try {
-				restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", jadwalJaga, ResponseEntity.class);
+				restTemplate1.postForObject("http://localhost:6060/testing/kirim-jadwal", jadwalJaga, ResponseEntity.class);
 				//link diganti sama web service yg dibuat igd
 			}
 			catch(Exception e) {
