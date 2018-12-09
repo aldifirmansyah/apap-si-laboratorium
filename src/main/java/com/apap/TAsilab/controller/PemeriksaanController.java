@@ -51,10 +51,6 @@ public class PemeriksaanController {
 	@Autowired
 	RestTemplate restTemplate2;
 	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
 	
 	@PostMapping(value="/kirim/hasil-lab")
 	public String addLabResult(@RequestParam (value="id") int id) {

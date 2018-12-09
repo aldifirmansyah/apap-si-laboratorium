@@ -39,11 +39,7 @@ public class JadwalJagaController {
 	
 	@Autowired
 	RestTemplate restTemplate3;
-	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+
 
 	private List<StaffDetail> getAllStaff() throws Exception{
 		String path = Setting.allStaffUrl;
