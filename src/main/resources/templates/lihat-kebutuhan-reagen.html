@@ -71,7 +71,7 @@
 								<div th:if="${reagen.status==1}" th:text="'Tidak Aktif/Telah dibeli'"></div>
 							</td>
 							<td th:text="${reagen.tanggalUpdate}"></td>
-							<div th:if="${role} == 'ADMIN'">
+							<div th:if="${role} == 'ADMIN' and ${reagen.status} == 0">
 								<td>
 									<form id="update" th:action="@{/lab/kebutuhan/ubah/} + ${reagen.id}" method="GET">
 										<button id="updateButton" class="btn btn-danger" type="submit">Update</button>	
