@@ -28,15 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/getAllJenisPemeriksaan").permitAll()
 			.antMatchers("/getAllJadwal").permitAll()
 			.antMatchers("/lab/kebutuhan/tambah").hasAnyAuthority("STAFF")
-			.antMatchers("/lab/kebutuhan").hasAnyAuthority("ADMIN","STAFF")
 			.antMatchers("/lab/kebutuhan/ubah/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/lab/kebutuhan").hasAnyAuthority("ADMIN","STAFF")
 			.antMatchers("/lab/pemeriksaan/permintaan/**").hasAnyAuthority("ADMIN", "STAFF")
 			.antMatchers("/lab/jadwal-jaga/tambah").hasAnyAuthority("ADMIN")
-			.antMatchers("/lab/jadwal-jaga/**").hasAnyAuthority("ADMIN","STAFF")
 			.antMatchers("/lab/jadwal-jaga/ubah/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/lab/jadwal-jaga/**").hasAnyAuthority("ADMIN","STAFF")
 			.antMatchers("/lab/stok/tambah").hasAnyAuthority("ADMIN")
-			.antMatchers("/lab/stok").hasAnyAuthority("ADMIN","STAFF")
 			.antMatchers("lab/stok/ubah/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/lab/stok").hasAnyAuthority("ADMIN","STAFF")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
@@ -46,16 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
 			.permitAll();
 	}
-	
-	/*
-	@Autowired
-	public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.passwordEncoder(encoder())
-			.withUser("cokicoki").password(encoder().encode("enaksekali"))
-			.roles("USER");
-	}
-	*/
 	
 	
 	@Bean
