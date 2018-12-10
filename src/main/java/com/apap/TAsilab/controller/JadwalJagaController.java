@@ -37,8 +37,7 @@ public class JadwalJagaController {
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
 	
-	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate = new RestTemplate();
 
 
 	private List<StaffDetail> getAllStaff() throws Exception{

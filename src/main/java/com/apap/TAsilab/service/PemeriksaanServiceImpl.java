@@ -30,8 +30,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	@Autowired
 	private PemeriksaanDB pemeriksaanDb;
 	
-	@Autowired
-	private RestTemplate restTemplate;
+	private RestTemplate restTemplate = new RestTemplate();
 	
 	@Autowired
 	private JadwalJagaDB jadwalJagaDb;
@@ -132,17 +131,16 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 
 	@Override
 	public void updatePemeriksaan(PemeriksaanModel pemeriksaan) throws ParseException {
-		if(pemeriksaan.getStatus()==1) {
+		if(pemeriksaan.getStatus()!=2) {
 			pemeriksaan.setHasil("Belum Ada Hasil");
+			JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getJenisPemeriksaan().getId());
+			for (LabSuppliesModel a: jp.getListSupplies()){
+				a.setJumlah(a.getJumlah()-1);
+			}
 		}
 		else if(pemeriksaan.getStatus()==2) {
-			pemeriksaan.setHasil(pemeriksaan.getHasil());
-		}
-		JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getJenisPemeriksaan().getId());
-		for (LabSuppliesModel a: jp.getListSupplies()){
-			a.setJumlah(a.getJumlah()-1);
-		}
-		
+			pemeriksaan.setHasil(pemeriksaan.getHasil().substring(1));
+		}		
 		pemeriksaan.setTanggalPemeriksaan(pemeriksaan.getTanggalPemeriksaan());
 		pemeriksaan.setStatus(pemeriksaan.getStatus());
 		pemeriksaanDb.save(pemeriksaan);

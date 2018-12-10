@@ -24,6 +24,7 @@ import com.apap.TAsilab.model.JadwalJagaModel;
 import com.apap.TAsilab.model.JenisPemeriksaanModel;
 import com.apap.TAsilab.model.LabSuppliesModel;
 import com.apap.TAsilab.model.PemeriksaanModel;
+import com.apap.TAsilab.rest.BaseResponse;
 import com.apap.TAsilab.rest.HasilLab;
 
 import com.apap.TAsilab.rest.KamarDetail;
@@ -49,12 +50,11 @@ public class PemeriksaanController {
 	@Autowired
 	JadwalJagaService jadwalService;
 	
-	@Autowired
-	RestTemplate restTemplate;
+	private RestTemplate restTemplate = new RestTemplate();
 	
 	
 	@PostMapping(value="/kirim/hasil-lab")
-	public String addLabResult(@RequestParam (value="id") int id) {
+	public String addLabResult(@RequestParam (value="id") int id, Model model) {
 		PemeriksaanModel pemeriksaan = pemeriksaanService.findPemeriksaanById(id);
 		HasilLab hasil = new HasilLab();
 		PasienDetail pasien = new PasienDetail();
@@ -64,12 +64,14 @@ public class PemeriksaanController {
 		hasil.setTanggalPengajuan(pemeriksaan.getTanggalPengajuan());
 		hasil.setPasien(pasien);
 		try {
-			restTemplate.postForObject("http://si-appointment.herokuapp.com/api/03/addLabResult", hasil, ResponseEntity.class);
-			return "lihat-daftar-pemeriksaan";
+			String respone = restTemplate.postForObject("http://si-appointment.herokuapp.com/api/03/addLabResult", hasil, String.class);
+			model.addAttribute("msg", "Data Berhasil Dikirim");
+			pemeriksaanService.delete(pemeriksaan);
+			return "success-page";
 		}
 		catch(Exception e) {
-			pemeriksaanService.delete(pemeriksaan);
-			return "lihat-daftar-pemeriksaan";
+			model.addAttribute("msg", "Data tidak berhasil dikirim");
+			return "success-page";
 		}
 	}
 	

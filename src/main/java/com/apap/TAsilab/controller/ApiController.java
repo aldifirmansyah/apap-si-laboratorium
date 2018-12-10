@@ -40,13 +40,7 @@ public class ApiController {
 	@Autowired
 	JadwalJagaDB jadwalDb;
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+	private RestTemplate restTemplate = new RestTemplate();
 	/*
 	 * API Untuk
 	 * Menerima request pemeriksaan
@@ -54,8 +48,8 @@ public class ApiController {
 	@PostMapping(value="/lab/pemeriksaan/permintaan")
 	public BaseResponse<PemeriksaanModel> addPermintaanPemeriksaan(@RequestBody PemeriksaanModel pemeriksaanLab, BindingResult bindingResult){
 		BaseResponse<PemeriksaanModel> response = new BaseResponse<PemeriksaanModel>();
-		java.util.Date uDate = new java.util.Date();
-		java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+		long millis=System.currentTimeMillis();  
+		java.sql.Date date=new java.sql.Date(millis);
 		if (bindingResult.hasErrors()) {
 			response.setStatus(500);
 			response.setMessage("Error Data");
@@ -66,18 +60,13 @@ public class ApiController {
 			response.setMessage("ID Pasien tidak boleh minus");
 			response.setResult(null);
 		}
-		else if(pemeriksaanLab.getTanggalPengajuan().before(sDate)) {
-			response.setStatus(500);
-			response.setMessage("Tangggal Tidak boleh masa lalu");
-			response.setResult(null);
-		}
 		else {
 			// Set tanggal pengajuan berdasarkan submit
 			pemeriksaanLab.setStatus(0);
 			//cek tanggal pemeriksaan dengan jadwal jaga
 			//jika tidak ada jadwal jaga pada tanggal tersebut,
 			pemeriksaanLab.setJadwalJaga(jadwalDb.findAll().get(0));
-			pemeriksaanLab.setTanggalPemeriksaan(jadwalDb.findAll().get(0).getTanggal());
+			pemeriksaanLab.setTanggalPemeriksaan(date);
 			pemeriksaanLab.setHasil("Belum Ada Hasil");
 			pemeriksaanDb.save(pemeriksaanLab);
 			response.setStatus(200);
