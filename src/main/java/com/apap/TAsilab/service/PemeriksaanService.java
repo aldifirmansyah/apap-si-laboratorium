@@ -21,6 +21,7 @@ public interface PemeriksaanService {
 	void delete(PemeriksaanModel pemeriksaan);
 	void addPemeriksaanDarah() throws ParseException;
 	List<KamarDetail> getAllKamar() throws ParseException;
+	Integer cekPemeriksaanTerbaru();
 	
 	
 }

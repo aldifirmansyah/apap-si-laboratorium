@@ -33,7 +33,7 @@ public class UserRoleController {
 			userService.addUser(user);
 		}
 		else {
-			message = "Password tidak sesuai ketentuan";
+			return "add-user";
 		}
 		return "login";
 	}

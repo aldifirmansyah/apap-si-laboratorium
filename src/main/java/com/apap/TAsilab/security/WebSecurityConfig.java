@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/lab/jadwal-jaga/ubah/**").hasAnyAuthority("ADMIN")
 			.antMatchers("/lab/stok/tambah").hasAnyAuthority("ADMIN")
 			.antMatchers("/lab/stok").hasAnyAuthority("ADMIN","STAFF")
-			.antMatchers("lab/stok/ubah/**").hasAnyAuthority("ADMIN")
+			.antMatchers("/lab/stok/ubah/**").hasAnyAuthority("ADMIN")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

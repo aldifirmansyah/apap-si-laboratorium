@@ -66,7 +66,7 @@ public class LabSuppliesServiceImpl implements LabSuppliesService {
 			// Kondisi jika lab supplies
 			//untuk jenis pemeriksaan tertentu sudah mendekati habis == 1
 			// munculkan message error pada template lihat-daftar-pemeriksaan
-			if(a.getJumlah()==1) {
+			if(a.getJumlah()==0) {
 				return false;
 			}
 		}

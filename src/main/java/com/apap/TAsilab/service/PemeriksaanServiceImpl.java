@@ -1,9 +1,11 @@
 package com.apap.TAsilab.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -150,6 +152,24 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	public void delete(PemeriksaanModel pemeriksaan) {
 		// TODO Auto-generated method stub
 		pemeriksaanDb.delete(pemeriksaan);
+		
+	}
+
+	@Override
+	public Integer  cekPemeriksaanTerbaru() {
+		int jumlah_inbox = 0;
+		long millis=System.currentTimeMillis();  
+		long diffInMillies =0;
+		long diff = 0;
+		for(PemeriksaanModel a : pemeriksaanDb.findAll()) {
+			diffInMillies = Math.abs(millis - a.getTanggalPemeriksaan().getTime());
+			diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if(diff==0) {
+				jumlah_inbox +=1;
+				System.out.println(a.getTanggalPemeriksaan());
+			}
+		}
+		return jumlah_inbox;
 		
 	}
 }
