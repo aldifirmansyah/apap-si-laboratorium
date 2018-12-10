@@ -112,7 +112,7 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		for(int i = 0;i<this.getAllKamar().size();i++) {
 			int sedangPasien = 0;
 			
-			if(!(pemeriksaanDb.findByIdPasien(this.getAllKamar().get(i).getIdPasien()) != null)) {
+			if(!(this.findByIdPasien(this.getAllKamar().get(i).getIdPasien()) != null)) {
 				if(listPemeriksaan.size()==0) {
 					java.util.Date utilDate = new java.util.Date();
 					java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -240,5 +240,11 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		}
 		return jumlah_inbox;
 		
+	}
+
+	@Override
+	public List<PemeriksaanModel> findByIdPasien(int id) {
+		// TODO Auto-generated method stub
+		return pemeriksaanDb.findByIdPasien(id);
 	}
 }
