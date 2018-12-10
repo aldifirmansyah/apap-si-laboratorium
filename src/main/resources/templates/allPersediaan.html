@@ -9,7 +9,7 @@
 		  <div class="container">
 		    <h1>Data Persediaan Lab</h1>
 		    <hr class="my-4">      
-		    <p>Layanan laboratorium Rumah Sakit Anaperancis</p>
+		    <p>Layanan laboratorium Rumah Sakit Cepat Sembuh</p>
 		  </div>
 	</div>
 	<div th:if="${role == 'ADMIN'}" class="container">
@@ -34,8 +34,8 @@
      				<td th:text="${supplies.nama}"></td>
      				<td th:text="${supplies.jumlah}"></td>
      				<td th:text="${supplies.deskripsi}"></td>
-     				<td th:if="${supplies.jumlah == 0 && supplies.jenis == 'Reagen'}" style="color: red">Stok reagen kosong/habis! Silakan ajukan rencana kebutuhan reagen!</td>
-     				<td th:unless="${supplies.jumlah == 0 && supplies.jenis == 'Reagen'}"></td>
+     				<td th:if="${supplies.jumlah == 0 && (supplies.jenis == 'Reagen' || supplies.jenis == 'reagen') }" style="color: red">Stok reagen kosong/habis! Silakan ajukan rencana kebutuhan reagen!</td>
+     				<td th:unless="${supplies.jumlah == 0 && (supplies.jenis == 'Reagen' || supplies.jenis == 'reagen')}"></td>
      				<td th:if="${role == 'ADMIN'}"><a th:href="@{'/lab/stok/ubah/' +${supplies.id}}" class="button">Update</a></td>
      			</tr>
      		</tbody>

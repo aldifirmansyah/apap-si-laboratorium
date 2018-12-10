@@ -2,7 +2,6 @@ package com.apap.TAsilab.controller;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.apap.TAsilab.model.KebutuhanReagenModel;
+import com.apap.TAsilab.model.LabSuppliesModel;
 import com.apap.TAsilab.model.UserRoleModel;
 import com.apap.TAsilab.service.KebutuhanReagenService;
 import com.apap.TAsilab.service.LabSuppliesService;
@@ -60,6 +60,10 @@ public class ReagenController {
 	@RequestMapping(value = "/tambah", method = RequestMethod.POST)
 	private String submitPerencanaanReagen(@ModelAttribute KebutuhanReagenModel kebutuhanReagen, Model model) {
 		
+		if (kebutuhanReagen.getJumlah() < 1) {
+			model.addAttribute("msg", "Jumlah tidak boleh kurang dari 1");
+			return "success-page";
+		}
 		long millis=System.currentTimeMillis();
 		Date todayDate = new Date(millis);
 		kebutuhanReagen.setTanggalUpdate(todayDate);
@@ -98,6 +102,9 @@ public class ReagenController {
 			kebutuhanReagen.setTanggalUpdate(todayDate);
 			
 			kebutuhanReagenService.add(kebutuhanReagen);
+			LabSuppliesModel labSupp = kebutuhanReagen.getReagen();
+			labSupp.setJumlah(labSupp.getJumlah() + kebutuhanReagen.getJumlah());
+			labSuppliesService.addSupplies(labSupp);
 			model.addAttribute("msg", "Status perencanaan kebutuhan reagen berhasil diubah.");
 		}
 		return "success-page";
