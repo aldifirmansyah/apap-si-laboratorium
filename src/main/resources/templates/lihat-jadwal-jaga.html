@@ -29,23 +29,24 @@
 			<div class="card-body">
 				<table class="table table-borderless">
 					<thead>
-							<tr align="center">		
+							<tr align="center">	
+								<th style="vertical-align: middle">Tanggal</th>	
 								<th style="vertical-align: middle">Jam mulai</th>
 								<th style="vertical-align: middle">Jam selesai</th>
 								<th style="vertical-align: middle">Nama Staff</th>
-								<th style="vertical-align: middle">Ubah</th>
+								<th style="vertical-align: middle" th:if="${role == 'ADMIN'}">Ubah</th>
 							</tr>					
 						</thead>
 						<tbody>
 							<!-- <span th:each="jadwal : *{jadwalJaga}"> -->
-								<tr th:each="jadwalJaga : ${listJadwalJaga}">								
+								<tr th:each="jadwalJaga : ${listJadwalJaga}">
+									<td align="center" th:text="${jadwalJaga.tanggal}"></td>								
 									<td align="center" th:text="${jadwalJaga.waktuMulai}"></td>
 									<td align="center" th:text="${jadwalJaga.waktuSelesai}"></td>
 									<td align="center" th:text="${infoStaff[__${jadwalJaga.idStaff}__]}">
-									<td>
-									<div  align="center">
+									<td th:if="${role == 'ADMIN'}">
+									<div align="center">
 										<a th:href="@{'/lab/jadwal-jaga/ubah/' + ${jadwalJaga.id}}" class="btn btn-primary" role="button">Ubah Jadwal</a>
-										<!-- <button class="btn btn-primary" onclick="location.href='/lab/jadwal-jaga/ubah/' + '${jadwalJaga.id}'">Ubah Jadwal</button> -->
 										<br><br>					
 									</div>
 									</td>
