@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
+
 <head>
     <object th:include="components/basepage :: title" th:remove="tag"></object>
-</head>
+</head>	
 <body>
 <div id="Content" class="container-full-bg">
 	<div class="jumbotron jumbotron-fluid" style="background-image: url('https://www.freewordpressheaders.com/wp-content/gallery/laboratory/laboratory-liquid-glass-beakers-website-header.jpg'); background-size: cover;">
@@ -50,7 +51,7 @@
         				<select name="status">
         					<option th:value= 0 disabled> Menunggu Persetujuan
         					<option th:value= 1 > Diproses
-        					<option th:value= 2 > Selesai
+        					<option th:value= 2 disabled> Selesai
         				</select>
         			</div>
         			<div th:if="${old.status==1}" class="form-group">

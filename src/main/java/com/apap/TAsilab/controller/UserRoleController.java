@@ -34,8 +34,6 @@ public class UserRoleController {
 		}
 		else {
 			message = "Password tidak sesuai ketentuan";
-			model.addAttribute("msg", message);
-			return "add-user";
 		}
 		return "login";
 	}

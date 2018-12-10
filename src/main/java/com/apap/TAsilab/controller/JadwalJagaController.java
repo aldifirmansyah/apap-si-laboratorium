@@ -36,7 +36,6 @@ public class JadwalJagaController {
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
 	
-	
 	private RestTemplate restTemplate = new RestTemplate();
 
 
