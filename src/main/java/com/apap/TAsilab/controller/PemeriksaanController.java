@@ -1,11 +1,7 @@
 package com.apap.TAsilab.controller;
 
-
-
 import java.util.List;
 import java.util.Map;
-
-
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +23,6 @@ import com.apap.TAsilab.model.PemeriksaanModel;
 import com.apap.TAsilab.rest.BaseResponse;
 import com.apap.TAsilab.rest.HasilLab;
 
-import com.apap.TAsilab.rest.KamarDetail;
 import com.apap.TAsilab.rest.PasienDetail;
 import com.apap.TAsilab.service.JadwalJagaService;
 import com.apap.TAsilab.service.JenisPemeriksaanService;
@@ -77,9 +72,10 @@ public class PemeriksaanController {
 	
 	@RequestMapping(value = "/lab/pemeriksaan/permintaan", method = RequestMethod.GET)
 	public String viewAllPemeriksaan(Model model) throws ParseException {
+		pemeriksaanService.addPemeriksaanDarah();
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.findAll();
+		
 		Map<Integer, PasienDetail> mapPasien = pemeriksaanService.getPatient();
-//		Map<Integer, KamarDetail> mapKamar = pemeriksaanService.getRoom();
 		
 		if(listPemeriksaan.size()==0) {
 			model.addAttribute("header", "Tidak ada permintaan pemeriksaan");

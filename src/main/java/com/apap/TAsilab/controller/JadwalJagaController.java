@@ -160,7 +160,7 @@ public class JadwalJagaController {
 				else {
 					
 					try {
-						restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
+						restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 						//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 					}
 					catch(Exception e) {
@@ -194,7 +194,7 @@ public class JadwalJagaController {
 							else {
 								
 								try {
-									restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
+									restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 									//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 								}
 								catch(Exception e) {
@@ -296,8 +296,9 @@ public class JadwalJagaController {
 			else {
 				
 				try {
-					restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-					//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
+					restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
+					//link diganti sama web service yg dibuat igd : https://sigd.herokuapp.com/api/jadwal/tambah/stafLab
+					//link test http://localhost:6060/testing/kirim-jadwal
 				}
 				catch(Exception e) {
 					
@@ -331,7 +332,7 @@ public class JadwalJagaController {
 						else {
 							
 							try {
-								restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
+								restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
 								//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 							}
 							catch(Exception e) {
