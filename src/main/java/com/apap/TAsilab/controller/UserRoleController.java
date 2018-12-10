@@ -27,16 +27,16 @@ public class UserRoleController {
 		return "add-user";
 	}
 	@RequestMapping(value = "/tambah", method = RequestMethod.POST)
-	private String addUserSubmit(@ModelAttribute UserRoleModel user) {
+	private String addUserSubmit(@ModelAttribute UserRoleModel user, Model model) {
 		String message = "";
 		if(validatePassword(user.getPassword())) {
 			userService.addUser(user);
-			message = "User Berhasil ditambah";	
 		}
 		else {
 			message = "Password tidak sesuai ketentuan";
+			model.addAttribute("msg", message);
+			return "add-user";
 		}
-		//redirectAttrs.addFlashAttribute("message", message);
 		return "login";
 	}
 	

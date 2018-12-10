@@ -7,6 +7,6 @@ import com.apap.TAsilab.model.*;
 
 public interface PemeriksaanDB extends JpaRepository<PemeriksaanModel, Integer>  {
 
-	boolean findByJenisPemeriksaan(String string);
+	PemeriksaanModel findByIdPasien(int id);
 	
 }

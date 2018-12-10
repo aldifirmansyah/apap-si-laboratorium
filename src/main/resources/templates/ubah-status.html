@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  
 </head>
 <body>
 <div id="Content" class="container-full-bg">
@@ -50,7 +49,7 @@
         				<select name="status">
         					<option th:value= 0 disabled> Menunggu Persetujuan
         					<option th:value= 1 > Diproses
-        					<option th:value= 2 > Selesai
+        					<option th:value= 2 disabled> Selesai
         				</select>
         			</div>
         			<div th:if="${old.status==1}" class="form-group">
