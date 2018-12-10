@@ -1,5 +1,6 @@
 package com.apap.TAsilab.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.apap.TAsilab.model.JenisPemeriksaanModel;
 import com.apap.TAsilab.model.LabSuppliesModel;
 import com.apap.TAsilab.model.PemeriksaanModel;
+import com.apap.TAsilab.repository.JadwalJagaDB;
 import com.apap.TAsilab.repository.JenisPemeriksaanDB;
 import com.apap.TAsilab.repository.PemeriksaanDB;
 import com.apap.TAsilab.rest.KamarDetail;
@@ -28,8 +30,10 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	@Autowired
 	private PemeriksaanDB pemeriksaanDb;
 	
+	private RestTemplate restTemplate = new RestTemplate();
+	
 	@Autowired
-	private RestTemplate restTemplate;
+	private JadwalJagaDB jadwalJagaDb;
 	
 	@Autowired
 	private JenisPemeriksaanDB jenisPemeriksaanDb;
@@ -59,34 +63,6 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		return mapPasien;
 	}
 	
-//	@Override
-//	public Map<Integer, KamarDetail> getRoom() throws ParseException {
-//		Map<Integer, KamarDetail> mapKamar = new HashMap<Integer, KamarDetail>();
-//		List<PemeriksaanModel> listPemeriksaan = pemeriksaanDb.findAll();
-//		for (PemeriksaanModel pemeriksaan : listPemeriksaan){
-//			KamarDetail kamar = this.getKamar((int)pemeriksaan.getIdPasien());
-//			mapKamar.put(pemeriksaan.getId(), kamar);
-//		}
-//		
-//		return mapKamar;
-//	}
-	
-//	@Override
-//	public KamarDetail getKamar(int idPasien) throws ParseException {
-//		KamarDetail kamar = new KamarDetail();
-//		JSONParser parser = new JSONParser();
-//		String response = restTemplate.getForObject("http://si-rawatInap.herokuapp.com/api/get-all-kamar", String.class);
-//        JSONObject json = (JSONObject) parser.parse(response);
-//        JSONObject result = (JSONObject) json.get("result");
-//        int requestPasien = (int) result.get("id");
-//        int id_pasien = Integer.parseInt(result.get("id_pasien").toString());
-//        int assignKamar = (int) result.get("assign");
-//        kamar.setIdPasien(id_pasien);
-//        kamar.setRequestPasien(requestPasien);
-//        kamar.setAssignKamar(assignKamar);
-//        return kamar;
-//	}
-	
 	@Override
 	public PemeriksaanModel findPemeriksaanById(int id) {
 		// TODO Auto-generated method stub
@@ -98,20 +74,73 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		// TODO Auto-generated method stub
 		return pemeriksaanDb.findAll();
 	}
+	
+	@Override
+	public List<KamarDetail> getAllKamar() throws ParseException {
+		KamarDetail response = restTemplate.getForObject("http://siranap.herokuapp.com/api/get-all-kamar", KamarDetail.class);
+		List<KamarDetail> kamar = new ArrayList<KamarDetail>();
+		for(int i=0;i<response.getResult().size();i++) {
+			kamar.add(response.getResult().get(i));
+		}
+		
+        return kamar;
+	}
+	@Override
+	public void addPemeriksaanDarah() throws ParseException {
+		for(PemeriksaanModel pemeriksaan : this.findAll()) {
+			for(int i = 0;i<this.getAllKamar().size();i++) {
+				if(pemeriksaan.getIdPasien()==this.getAllKamar().get(i).getIdPasien()) {
+					if(!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")){
+						java.util.Date utilDate = new java.util.Date();
+						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+						PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+						JenisPemeriksaanModel jenisPemeriksaanDarah = new JenisPemeriksaanModel();
+						jenisPemeriksaanDarah.setId(100);
+						jenisPemeriksaanDarah.setNama("Darah");
+						jenisPemeriksaanDb.save(jenisPemeriksaanDarah);
+						pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+						pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+						pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+						pemeriksaanDarah.setHasil("Belum ada hasil");
+						pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+						pemeriksaanDarah.setStatus(0);
+						pemeriksaanDarah.setTanggalPemeriksaan(null);
+					}
+				}else {
+					if(pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")){
+						java.util.Date utilDate = new java.util.Date();
+						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+						PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+						JenisPemeriksaanModel jenisPemeriksaanDarah = new JenisPemeriksaanModel();
+						jenisPemeriksaanDarah.setId(100);
+						jenisPemeriksaanDarah.setNama("Darah");
+						jenisPemeriksaanDb.save(jenisPemeriksaanDarah);
+						pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+						pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+						pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+						pemeriksaanDarah.setHasil("Belum ada hasil");
+						pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+						pemeriksaanDarah.setStatus(0);
+						pemeriksaanDarah.setTanggalPemeriksaan(null);
+					}
+				}
+			}
+			
+		}
+	}
 
 	@Override
 	public void updatePemeriksaan(PemeriksaanModel pemeriksaan) throws ParseException {
-		if(pemeriksaan.getStatus()==1) {
+		if(pemeriksaan.getStatus()!=2) {
 			pemeriksaan.setHasil("Belum Ada Hasil");
+			JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getJenisPemeriksaan().getId());
+			for (LabSuppliesModel a: jp.getListSupplies()){
+				a.setJumlah(a.getJumlah()-1);
+			}
 		}
 		else if(pemeriksaan.getStatus()==2) {
-			pemeriksaan.setHasil(pemeriksaan.getHasil());
-		}
-		JenisPemeriksaanModel jp = jenisPemeriksaanDb.findById(pemeriksaan.getJenisPemeriksaan().getId());
-		for (LabSuppliesModel a: jp.getListSupplies()){
-			a.setJumlah(a.getJumlah()-1);
-		}
-		
+			pemeriksaan.setHasil(pemeriksaan.getHasil().substring(1));
+		}		
 		pemeriksaan.setTanggalPemeriksaan(pemeriksaan.getTanggalPemeriksaan());
 		pemeriksaan.setStatus(pemeriksaan.getStatus());
 		pemeriksaanDb.save(pemeriksaan);

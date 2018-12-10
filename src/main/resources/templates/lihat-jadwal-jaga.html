@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
 
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    <object th:include="components/basepage :: title" th:remove="tag"></object>
     
     <!-- pagination -->
     
@@ -21,32 +21,44 @@
 
 <body>
 	<div id="Content" class="container-full-bg">
-		<div class="card-body">
-				<h3 class="card-text">Cari Jadwal Jaga</h3>
-				<label for="tanggal"> Tanggal</label>
-				<input type="date" name="tanggal" class="form-control" id="tanggal" required/>
+		<div class="card-header" align="center">
+			<h3 th:text="'Jadwal Jaga'"></h3>	
+			<!-- <p th:text="${tanggal}"/>	 -->	
+		</div>			
+		<!-- <span th:if="!${jadwalJagaKosong}"> -->
+			<div class="card-body">
+				<table class="table table-borderless">
+					<thead>
+							<tr align="center">		
+								<th style="vertical-align: middle">Jam mulai</th>
+								<th style="vertical-align: middle">Jam selesai</th>
+								<th style="vertical-align: middle">Nama Staff</th>
+								<th style="vertical-align: middle">Ubah</th>
+							</tr>					
+						</thead>
+						<tbody>
+							<!-- <span th:each="jadwal : *{jadwalJaga}"> -->
+								<tr th:each="jadwalJaga : ${listJadwalJaga}">								
+									<td align="center" th:text="${jadwalJaga.waktuMulai}"></td>
+									<td align="center" th:text="${jadwalJaga.waktuSelesai}"></td>
+									<td align="center" th:text="${infoStaff[__${jadwalJaga.idStaff}__]}">
+									<td>
+									<div  align="center">
+										<a th:href="@{'/lab/jadwal-jaga/ubah/' + ${jadwalJaga.id}}" class="btn btn-primary" role="button">Ubah Jadwal</a>
+										<!-- <button class="btn btn-primary" onclick="location.href='/lab/jadwal-jaga/ubah/' + '${jadwalJaga.id}'">Ubah Jadwal</button> -->
+										<br><br>					
+									</div>
+									</td>
+								</tr>
+						<!-- 	</span>	 -->						
+						</tbody>
+				</table>
 			</div>
-			<a class="btn" th:href="@{'/lab/jadwal-jaga/' +${tanggal}}"> Cari</a>
-		<div class="col">
-			<table border="1" id="searchResult">
-				<thead>
-					<tr>					
-					<th style="text-align: center">Tanggal</th>
-					<th style="text-align: center">Jam mulai</th>
-					<th style="text-align: center">Jam selesai</th>
-					<th style="text-align: center">Nama Staff</th>
-					</tr>					
-				</thead>
-				<tbody>
-					<tr th:each="jadwalJaga,iterationStatus : ${listJadwalJaga}">
-						<td th:text="${jadwalJaga.tanggal}"></td>
-						<td th:text="${jadwalJaga.waktuMulai}"></td>
-						<td th:text="${jadwalJaga.waktuSelesai}"></td>
-						<td th:text="${listInfoStaff{__${jadwalJaga.idStaff}__}}"></td>
-					</tr>
-				</tbody>
-			</table>			
-		</div>	
+			<div  align="center">
+				<button class="btn btn-primary" onclick="location.href='/lab/jadwal-jaga/tambah'">Tambah Staf Jaga</button>
+				<br><br>					
+			</div>
+		<!-- </span> -->
 	</div>
 	
 	<script>

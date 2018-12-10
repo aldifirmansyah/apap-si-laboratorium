@@ -1,10 +1,12 @@
 package com.apap.TAsilab.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.apap.TAsilab.model.JadwalJagaModel;
 import com.apap.TAsilab.repository.JadwalJagaDB;
 
@@ -22,7 +24,7 @@ public class JadwalJagaServiceImpl implements JadwalJagaService {
 	
 	
 	@Override
-	public List<JadwalJagaModel> getJadwalJagaByTangal(String tanggal){
+	public List<JadwalJagaModel> getJadwalJagaByTangal(Date tanggal){
 		return jadwalJagaDB.findByTanggal(tanggal);
 	}
 	

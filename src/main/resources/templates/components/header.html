@@ -21,8 +21,11 @@
             </li>
         </ul>
         <ul class="navbar-nav pull-right">
-            <li class="nav-item active">
+            <li class="nav-item">
             	<a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+            <li class="nav-item active">
+            	<a class="nav-link" th:text=" 'Welcome, ' + ${#httpServletRequest.remoteUser}"></a>
             </li>
         </ul>
     </div>

@@ -1,49 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
 
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    <object th:include="components/basepage :: title" th:remove="tag"></object>
 </head>	
 
 <body>
 	<div id="Content" class="container-full-bg">
 		
-		<div class="col-5">
-			<h3>Tambah Jadwal Jaga</h3>
+		<h3>Tambah Jadwal Jaga</h3>
+		<div class="card">
 			<form th:action="@{/lab/jadwal-jaga/tambah}" th:object="${jadwalJaga}" method="POST">
-				<div class="form-group row">
-					<label for="tanggal" class="col-sm-3 col-form-label-md">Tanggal</label>
-					<div class="col-sm-9">
-						<input type="date" name="tanggal" required class="form-control" id="tanggal" />
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="jam_mulai" class="col-sm-3 col-form-label-md">Jam mulai</label> <!-- Jam mulai nama yang di tampilin -->
-					<div class="col-sm-9">
-						<input type="time" name="waktuMulai" required class="form-control" id="waktu_mulai" />
-						<!-- waktuMulai itu nama di Jadwaljagamodel
-						waktu_mulai itu nama di db nya -->
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="jam_selesai" class="col-sm-3 col-form-label-md">Jam selesai</label>
-					<div class="col-sm-9">
-						<input type="time" name="waktuSelesai" required class="form-control" id="waktu_selesai"/>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="id_staff" class="col-sm-3 col-form-label-md">Nama Staff</label>
-					<select class="form-control" required="required" name="idStaff" id="staff">
-						<option disabled="disabled" selected="selected" >Pilih Staff</option>
-						<option th:each="staff : ${listStaff}" th:value="${staff.id}" th:text="${staff.nama}"></option>
-					</select>
-				</div>
-				<!-- <input type="hidden" name="id" th:value="${jadwalJaga.id}"> -->
-				<button type="submit" class="btn btn-primary mb-2">Simpan</button>
-							
-					
-			
+				<table>
+					<thead>
+						<tr>
+							<th> Tanggal </th>
+							<th> Jam Mulai </th>
+							<th> Jam Selesai </th>
+							<th> Staff </th>
+							<th>
+								<button type="submit" name="add-more" class="btn btn-primary">Add More</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody id="tableContent">
+						<tr th:each="jadwal,iterationStatus : *{listJadwalJaga}">
+							<td>
+								<input type="date" name="tanggal" id="tanggal" th:field="*{listJadwalJaga[__${iterationStatus.index}__].tanggal}" required>
+							</td>
+							<td>
+								<input type="time" name="waktuMulai" id="waktu_mulai" th:field="*{listJadwalJaga[__${iterationStatus.index}__].waktuMulai}" required>
+								
+							</td>
+							<td>
+								<input type="time" name="waktuSelesai" id="waktu_selesai" th:field="*{listJadwalJaga[__${iterationStatus.index}__].waktuSelesai}" required>
+							</td>
+							<td>
+								<select name="idStaff" id="staff" th:field="*{listJadwalJaga[__${iterationStatus.index}__].idStaff}" required>
+									<option th:each="staff : ${listStaff}" th:value="${staff.id}" th:text="${staff.nama}"></option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="submit" class="btn btn-primary mb-2">Save</button>
 			</form>
 		</div>
+		
 	</div>
 </body>
+	
+</html>

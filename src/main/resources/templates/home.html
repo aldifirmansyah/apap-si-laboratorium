@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    <object th:include="components/basepage :: title" th:remove="tag" th:text="Home"></object>
 </head>
 
 <body>
@@ -10,40 +10,85 @@
 		  <div class="container">
 		    <h1>Sistem Informasi Laboratorium</h1>
 		    <hr class="my-4">      
-		    <p>Layanan laboratorium Rumah Sakit Anaperancis</p>
+		    <p>Layanan laboratorium Rumah Sakit Cepat Sembuh</p>
 		  </div>
 		</div>
 		
+		
 		<div class="container">
-		  <div class="card-deck">
-		  	<div class="card" style="width:400px">
-			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
+		<!-- <div class="flex flex-wrap -m-3"> 
+		  <div class="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3">
+		    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+		      <div class="p-4 flex-1 flex flex-col" style="">
+		        <h3 class="mb-4 text-2xl">Perencanaan Kebutuhan Reagen</h3>
+		        <div class="mb-4 text-grey-darker text-sm flex-1">
+		          <p>Kelola perencanaan kebutuhan reagen</p>
+		        </div>
+		        <a href="/lab/kebutuhan/" class="btn btn-primary">Lihat</a>
+		      </div>
+		    </div>  
+		  </div>
+		  
+		  <div class="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3">
+		    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+		      <div class="p-4 flex-1 flex flex-col" style="">
+		        <h3 class="mb-4 text-2xl">Data Persediaan Lab</h3>
+		        <div class="mb-4 text-grey-darker text-sm flex-1">
+		          <p>Kelola data persediaan laboratorium</p>
+		        </div>
+		        <a href="/lab/stok" class="btn btn-primary">Lihat</a>
+		      </div>
+		    </div>  
+		  </div>
+		  
+		  <div class="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3">
+		    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+		      <div class="p-4 flex-1 flex flex-col" style="">
+		        <h3 class="mb-4 text-2xl">My heading</h3>
+		        <div class="mb-4 text-grey-darker text-sm flex-1">
+		          <p>Shorter text.</p>
+		        </div>
+		        <a href="#" class="border-t border-grey-light pt-2 text-xs text-grey hover:text-red uppercase no-underline tracking-wide" style="">Twitter</a>
+		      </div>
+		    </div>  
+		  </div>
+		  
+		  <div class="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3">
+		    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+		      <div class="p-4 flex-1 flex flex-col" style="">
+		        <h3 class="mb-4 text-2xl">My heading</h3>
+		        <div class="mb-4 text-grey-darker text-sm flex-1">
+		          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+		        </div>
+		        <a href="#" class="border-t border-grey-light pt-2 text-xs text-grey hover:text-red uppercase no-underline tracking-wide" style="">Twitter</a>
+		      </div>
+		    </div>  
+		  </div>
+		</div>-->
+		<div class="card-deck">
+		  	<div class="card bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col" style="width:300px">
 			    <div class="card-body">
 			      <h4 class="card-title">Perencanaan Kebutuhan Reagen</h4>
 			      <p>Kelola perencanaan kebutuhan reagen</p>
 			      <a href="/lab/kebutuhan/" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>
-  			<div class="card" style="width:400px">
-			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
+  			<div class="card bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col" style="width:300px">
 			    <div class="card-body">
 			      <h4 class="card-title">Data Persediaan Lab</h4>
 			      <p>Kelola data persediaan laboratorium</p>
 			      <a href="/lab/stok" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>
-  			<div class="card" style="width:400px">
-			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
+  			<div class="card bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col" style="width:300px">
 			    <div class="card-body">
 			      <h4 class="card-title">Jadwal Staff Jaga</h4>
 			      <p>Kelola jadwal untuk staff jaga laboratorium</p>
-			      <a href="/lab/jadwal-jaga/tambah" class="btn btn-primary">Lihat</a>
+			      <a href="/lab/jadwal-jaga/pilihTanggal" class="btn btn-primary">Lihat</a>	
+			      <a href="/lab/jadwal-jaga/tambah" class="btn btn-primary">Tambah</a>		      
 			    </div>
   			</div>
-		  </div>
-		  <div class="card-deck">
-		  	<div class="card" style="width:100px">
-			    <!-- <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%"> -->
+  			<div class="card bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col" style="width:300px">
 			    <div class="card-body">
 			      <h4 class="card-title">Daftar Permintaan Pemeriksaan</h4>
 			      <p>Kelola permintaan pemeriksaan pasien</p>
@@ -54,4 +99,5 @@
 		</div>
     </div>
 </body>
+
 </html>
