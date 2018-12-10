@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/BasePage :: basepage}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
 
 <head>
-    <object th:include="components/BasePage :: title" th:remove="tag"></object>
+    <object th:include="components/basepage :: title" th:remove="tag"></object>
     
     <!-- pagination -->
     
@@ -33,14 +33,22 @@
 								<th style="vertical-align: middle">Jam mulai</th>
 								<th style="vertical-align: middle">Jam selesai</th>
 								<th style="vertical-align: middle">Nama Staff</th>
+								<th style="vertical-align: middle">Ubah</th>
 							</tr>					
 						</thead>
 						<tbody>
 							<!-- <span th:each="jadwal : *{jadwalJaga}"> -->
-								<tr th:each="jadwalJaga : ${listJadwalJaga}">									
+								<tr th:each="jadwalJaga : ${listJadwalJaga}">								
 									<td align="center" th:text="${jadwalJaga.waktuMulai}"></td>
 									<td align="center" th:text="${jadwalJaga.waktuSelesai}"></td>
 									<td align="center" th:text="${infoStaff[__${jadwalJaga.idStaff}__]}">
+									<td>
+									<div  align="center">
+										<a th:href="@{'/lab/jadwal-jaga/ubah/' + ${jadwalJaga.id}}" class="btn btn-primary" role="button">Ubah Jadwal</a>
+										<!-- <button class="btn btn-primary" onclick="location.href='/lab/jadwal-jaga/ubah/' + '${jadwalJaga.id}'">Ubah Jadwal</button> -->
+										<br><br>					
+									</div>
+									</td>
 								</tr>
 						<!-- 	</span>	 -->						
 						</tbody>

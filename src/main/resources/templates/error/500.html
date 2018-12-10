@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
 <head>
-<title> 500 Interval Server Error </title>
+    <object th:include="components/basepage :: title" th:remove="tag"></object>
 </head>
 <body>
-<h2> Internat Server Error </h2>
+	<div id="Content" class="container-full-bg">
+        <div class="jumbotron vertical-center" style="margin-bottom:0px;">
+            <div class="container">
+            	<div>
+					<h1>500 Internal Server Error</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
