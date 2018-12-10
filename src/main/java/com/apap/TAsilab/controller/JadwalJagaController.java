@@ -8,11 +8,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -167,6 +170,16 @@ public class JadwalJagaController {
 				else {
 					
 					try {
+						Map map = new LinkedHashMap();
+						map.put("dokter", JadwalJaga.getListJadwalJaga().get(i).getIdStaff());
+						map.put("waktuMulai", JadwalJaga.getListJadwalJaga().get(i).getWaktuMulai());
+						map.put("waktuSelesai", JadwalJaga.getListJadwalJaga().get(i).getWaktuSelesai());
+						map.put("tanggal", JadwalJaga.getListJadwalJaga().get(i).getTanggal());
+
+						HttpEntity<Object> requestEntity = new HttpEntity<>(map);
+
+						ResponseEntity<String> result = restTemplate.exchange("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", HttpMethod.POST, requestEntity, String.class);
+						
 						restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 						//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 					}
@@ -201,6 +214,18 @@ public class JadwalJagaController {
 							else {
 								
 								try {
+									
+									Map map = new LinkedHashMap();
+									map.put("dokter", JadwalJaga.getListJadwalJaga().get(i).getIdStaff());
+									map.put("waktuMulai", JadwalJaga.getListJadwalJaga().get(i).getWaktuMulai());
+									map.put("waktuSelesai", JadwalJaga.getListJadwalJaga().get(i).getWaktuSelesai());
+									map.put("tanggal", JadwalJaga.getListJadwalJaga().get(i).getTanggal());
+
+									HttpEntity<Object> requestEntity = new HttpEntity<>(map);
+
+									ResponseEntity<String> result = restTemplate.exchange("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", HttpMethod.POST, requestEntity, String.class);
+									
+									
 									restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 									//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 								}
@@ -306,6 +331,16 @@ public class JadwalJagaController {
 			else {
 				
 				try {
+					Map map = new LinkedHashMap();
+					map.put("dokter", newJadwalJaga.getIdStaff());
+					map.put("waktuMulai", newJadwalJaga.getWaktuMulai());
+					map.put("waktuSelesai", newJadwalJaga.getWaktuSelesai());
+					map.put("tanggal", newJadwalJaga.getTanggal());
+
+					HttpEntity<Object> requestEntity = new HttpEntity<>(map);
+
+					ResponseEntity<String> result = restTemplate.exchange("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", HttpMethod.POST, requestEntity, String.class);
+					
 					restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
 					//link diganti sama web service yg dibuat igd : https://sigd.herokuapp.com/api/jadwal/tambah/stafLab
 					//link test http://localhost:6060/testing/kirim-jadwal
@@ -342,6 +377,16 @@ public class JadwalJagaController {
 						else {
 							
 							try {
+								Map map = new LinkedHashMap();
+								map.put("dokter", newJadwalJaga.getIdStaff());
+								map.put("waktuMulai", newJadwalJaga.getWaktuMulai());
+								map.put("waktuSelesai", newJadwalJaga.getWaktuSelesai());
+								map.put("tanggal", newJadwalJaga.getTanggal());
+
+								HttpEntity<Object> requestEntity = new HttpEntity<>(map);
+
+								ResponseEntity<String> result = restTemplate.exchange("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", HttpMethod.POST, requestEntity, String.class);
+								
 								restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
 								//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 							}
