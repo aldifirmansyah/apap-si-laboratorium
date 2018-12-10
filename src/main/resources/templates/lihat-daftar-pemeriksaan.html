@@ -30,7 +30,8 @@
 							<td th:if="${pemeriksaan.hasil=='Belum Ada Hasil'}" th:text="'Belum'+' Ada'+' Hasil'"></td>
 							<td th:if="${pemeriksaan.hasil!='Belum Ada Hasil'}" th:text="${pemeriksaan.hasil}"></td>
 							<td th:if="${pemeriksaan.status!=2}"><a th:href="@{'/lab/pemeriksaan/' +${pemeriksaan.id}}" class="button">Update</a></td>
-							<td th:if="${pemeriksaan.status==2}">
+
+							<td th:if="${role == 'ADMIN'} and ${pemeriksaan.status==2}">
 								<form th:action="@{/kirim/hasil-lab}" method = "POST">
 									<input type="hidden" name="id" th:value="${pemeriksaan.id}">
 									<button id="kirimButton" class="btn btn-danger" type="submit">Kirim</button>	
@@ -43,5 +44,6 @@
 		    </div>
 		</div>
 	</div>
+	<script th:src="@{/js/datatable.js}"></script>
 	</body>
 </html>

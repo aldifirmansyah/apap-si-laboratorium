@@ -6,6 +6,8 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +22,7 @@ import com.apap.TAsilab.model.JadwalJagaModel;
 import com.apap.TAsilab.model.JenisPemeriksaanModel;
 import com.apap.TAsilab.model.LabSuppliesModel;
 import com.apap.TAsilab.model.PemeriksaanModel;
+import com.apap.TAsilab.model.UserRoleModel;
 import com.apap.TAsilab.rest.BaseResponse;
 import com.apap.TAsilab.rest.HasilLab;
 
@@ -28,6 +31,7 @@ import com.apap.TAsilab.service.JadwalJagaService;
 import com.apap.TAsilab.service.JenisPemeriksaanService;
 import com.apap.TAsilab.service.LabSuppliesService;
 import com.apap.TAsilab.service.PemeriksaanService;
+import com.apap.TAsilab.service.UserRoleService;
 
 
 @Controller
@@ -44,6 +48,9 @@ public class PemeriksaanController {
 	
 	@Autowired
 	JadwalJagaService jadwalService;
+	
+	@Autowired
+	UserRoleService userRoleService;
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
@@ -86,6 +93,10 @@ public class PemeriksaanController {
 			model.addAttribute("header", "Daftar Permintaan Pemeriksaan");
 			
 		}
+		// Role
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserRoleModel user = userRoleService.findUserByUsername(auth.getName());
+		model.addAttribute("role", user.getRole());
 		model.addAttribute("title", "Daftar Pemeriksaan");
 		return "lihat-daftar-pemeriksaan";
 	}
