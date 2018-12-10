@@ -23,7 +23,6 @@ import com.apap.TAsilab.repository.JenisPemeriksaanDB;
 import com.apap.TAsilab.repository.PemeriksaanDB;
 import com.apap.TAsilab.rest.KamarDetail;
 import com.apap.TAsilab.rest.PasienDetail;
-import com.apap.TAsilab.rest.Pemeriksaan;
 
 
 @Service
@@ -41,7 +40,6 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 	@Autowired
 	private JenisPemeriksaanDB jenisPemeriksaanDb;
 	
-	Map<Integer, Pemeriksaan> pemeriksaanPasien;
 	
 	
 	@Override
