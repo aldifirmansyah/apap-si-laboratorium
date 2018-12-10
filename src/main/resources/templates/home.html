@@ -42,8 +42,9 @@
   			</div>
   			<div class="card bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col" style="width:300px">
 			    <div class="card-body">
-			      <h4 class="card-title">Daftar Permintaan Pemeriksaan</h4>
+			     <h4 class="card-title">Daftar Permintaan Pemeriksaan</h4>
 			      <p>Kelola permintaan pemeriksaan pasien</p>
+			      <i class="fa fa-bell-o" style="font-size:24px;color:red"></i><p th:text="${jumlah} +' Pemeriksaan Baru Hari ini'"></p>
 			      <a href="/lab/pemeriksaan/permintaan" class="btn btn-primary">Lihat</a>
 			    </div>
   			</div>

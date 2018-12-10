@@ -22,7 +22,13 @@
 		        		</thead>
 		        		<tbody>
 		     			<tr th:each="pemeriksaan : *{listPemeriksaan}">
-							<td th:text="${mapPasien.get(pemeriksaan.id).nama}"></td>
+		     				<td th:if="${pemeriksaan.tanggalPemeriksaan.toString().equals(cek_tanggal.toString())}">
+		     					<i class="fa fa-bell-o" style="font-size:18px;color:red"> Hari ini</i><p th:text="${mapPasien.get(pemeriksaan.id).nama}"></p>
+							</td>
+							<!--<td th:if="${cek_tanggal!=pemeriksaan.tanggalPemeriksaan}" th:text="${mapPasien.get(pemeriksaan.id).nama}"></td>-->
+							<td th:if="${pemeriksaan.tanggalPemeriksaan.toString().equals(cek_tanggal.toString())==false}">
+		     					<p th:text="${mapPasien.get(pemeriksaan.id).nama}"></p>
+							</td>
 							<td th:text="${pemeriksaan.tanggalPengajuan}"></td>
 							<td th:if="${pemeriksaan.status==0}" th:text="'Menunggu'+' Persetujuan'"></td>
 							<td th:if="${pemeriksaan.status==1}" th:text="Diproses"></td>
@@ -30,8 +36,7 @@
 							<td th:if="${pemeriksaan.hasil=='Belum Ada Hasil'}" th:text="'Belum'+' Ada'+' Hasil'"></td>
 							<td th:if="${pemeriksaan.hasil!='Belum Ada Hasil'}" th:text="${pemeriksaan.hasil}"></td>
 							<td th:if="${pemeriksaan.status!=2}"><a th:href="@{'/lab/pemeriksaan/' +${pemeriksaan.id}}" class="button">Update</a></td>
-
-							<td th:if="${role == 'ADMIN'} and ${pemeriksaan.status==2}">
+							<td th:if="${pemeriksaan.status==2} AND ${role} == 'ADMIN'">
 								<form th:action="@{/kirim/hasil-lab}" method = "POST">
 									<input type="hidden" name="id" th:value="${pemeriksaan.id}">
 									<button id="kirimButton" class="btn btn-danger" type="submit">Kirim</button>	

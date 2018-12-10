@@ -83,6 +83,15 @@ public class PemeriksaanController {
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.findAll();
 		
 		Map<Integer, PasienDetail> mapPasien = pemeriksaanService.getPatient();
+
+		long millis=System.currentTimeMillis();
+		java.sql.Date date=new java.sql.Date(millis);
+//		Map<Integer, KamarDetail> mapKamar = pemeriksaanService.getRoom();
+
+		// Role
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserRoleModel user = userRoleService.findUserByUsername(auth.getName());
+		model.addAttribute("role", user.getRole());
 		
 		if(listPemeriksaan.size()==0) {
 			model.addAttribute("header", "Tidak ada permintaan pemeriksaan");
@@ -93,11 +102,10 @@ public class PemeriksaanController {
 			model.addAttribute("header", "Daftar Permintaan Pemeriksaan");
 			
 		}
-		// Role
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserRoleModel user = userRoleService.findUserByUsername(auth.getName());
 		model.addAttribute("role", user.getRole());
 		model.addAttribute("title", "Daftar Pemeriksaan");
+		model.addAttribute("cek_tanggal", date);
+		System.out.println(date.toString().equals(pemeriksaanService.findAll().get(pemeriksaanService.findAll().size()-1).getTanggalPemeriksaan().toString()));
 		return "lihat-daftar-pemeriksaan";
 	}
 	
