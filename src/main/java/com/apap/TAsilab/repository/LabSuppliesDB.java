@@ -6,5 +6,6 @@ import com.apap.TAsilab.model.LabSuppliesModel;
 
 public interface LabSuppliesDB extends JpaRepository<LabSuppliesModel, Integer>{
 	List<LabSuppliesModel> findByJenis(String jenis);
+	List<LabSuppliesModel> findByJenisContainingIgnoreCase(String jenis);
 
 }

@@ -14,6 +14,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import com.apap.TAsilab.model.JadwalJagaModel;
+import com.apap.TAsilab.model.UserRoleModel;
 import com.apap.TAsilab.rest.Setting;
 import com.apap.TAsilab.rest.StaffDetail;
 import com.apap.TAsilab.service.JadwalJagaService;
+import com.apap.TAsilab.service.UserRoleService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -35,6 +39,9 @@ public class JadwalJagaController {
 
 	@Autowired
 	private JadwalJagaService jadwalJagaService;
+	
+	@Autowired
+	private UserRoleService userService;
 	
 	private RestTemplate restTemplate = new RestTemplate();
 
@@ -160,7 +167,7 @@ public class JadwalJagaController {
 				else {
 					
 					try {
-						restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
+						restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 						//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 					}
 					catch(Exception e) {
@@ -194,7 +201,7 @@ public class JadwalJagaController {
 							else {
 								
 								try {
-									restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
+									restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", JadwalJaga.getListJadwalJaga().get(i), ResponseEntity.class);
 									//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 								}
 								catch(Exception e) {
@@ -235,6 +242,9 @@ public class JadwalJagaController {
 		Date tanggalJaga=new SimpleDateFormat("yyyy/MM/dd").parse(gabungTgl);
 		List<JadwalJagaModel> listJadwalJaga = jadwalJagaService.getJadwalJagaByTangal(tanggalJaga);
 		
+		UserRoleModel user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()); 
+		model.addAttribute("role", user.getRole());
+				
 		model.addAttribute("listJadwalJaga", listJadwalJaga);
 		model.addAttribute("infoStaff", this.getStaff());
 		return "lihat-jadwal-jaga";
@@ -296,8 +306,9 @@ public class JadwalJagaController {
 			else {
 				
 				try {
-					restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
-					//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
+					restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
+					//link diganti sama web service yg dibuat igd : https://sigd.herokuapp.com/api/jadwal/tambah/stafLab
+					//link test http://localhost:6060/testing/kirim-jadwal
 				}
 				catch(Exception e) {
 					
@@ -331,7 +342,7 @@ public class JadwalJagaController {
 						else {
 							
 							try {
-								restTemplate.postForObject("http://localhost:6060/testing/kirim-jadwal", newJadwalJaga, ResponseEntity.class);
+								restTemplate.postForObject("https://sigd.herokuapp.com/api/jadwal/tambah/stafLab", newJadwalJaga, ResponseEntity.class);
 								//link diganti sama web service yg dibuat igd : {{link heroku silab : bakal diumumin selanjutnya}}/api/jadwal/tambah/stafLab
 							}
 							catch(Exception e) {

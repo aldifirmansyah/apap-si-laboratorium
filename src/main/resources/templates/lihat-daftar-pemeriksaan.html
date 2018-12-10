@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{components/basepage :: basepage}">
+
 <head>
     <object th:include="components/basepage :: title" th:remove="tag"></object>
-</head>
+</head>	
 <body>
 	<div id="Content" class="container-full-bg">
 		<br>
@@ -47,6 +48,11 @@
 		        </div>
 		    </div>
 		</div>
+		<script type="text/javascript">
+    	$(document).ready(function(e){
+    		$(myTable).DataTable()
+    	});
+    </script>
 	</div>
-	</body>
+</body>
 </html>

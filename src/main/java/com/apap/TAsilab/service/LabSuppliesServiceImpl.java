@@ -1,5 +1,4 @@
 package com.apap.TAsilab.service;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class LabSuppliesServiceImpl implements LabSuppliesService {
 
 	@Override
 	public List<LabSuppliesModel> getAllReagen() {		
-		return labSuppliesDb.findByJenis("reagen");
+		return labSuppliesDb.findByJenisContainingIgnoreCase("reagen");
 	}
 
 	@Override
