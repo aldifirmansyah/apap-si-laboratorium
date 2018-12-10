@@ -1,9 +1,11 @@
 package com.apap.TAsilab.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -109,40 +111,27 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		List<PemeriksaanModel> listPemeriksaan = pemeriksaanDb.findAll();
 		for(int i = 0;i<this.getAllKamar().size();i++) {
 			int sedangPasien = 0;
-			if(!(pemeriksaanDb.findByIdPasien(this.getAllKamar().get(i).getIdPasien()) != null)) {
-				for(PemeriksaanModel pemeriksaan : listPemeriksaan) {
-					if(!(sedangPasien==this.getAllKamar().get(i).getIdPasien())) {
-						if(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien()&&!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
-							java.util.Date utilDate = new java.util.Date();
-							java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-							PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
-							JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
-							pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
-							pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
-							pemeriksaanDarah.setTanggalPengajuan(sqlDate);
-							pemeriksaanDarah.setHasil("Belum ada hasil");
-							pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
-							pemeriksaanDarah.setStatus(0);
-							pemeriksaanDarah.setTanggalPemeriksaan(null);
-							pemeriksaanDb.save(pemeriksaanDarah);
-							sedangPasien = this.getAllKamar().get(i).getIdPasien();
-						}
-						else if(!(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien())&&pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
-							java.util.Date utilDate = new java.util.Date();
-							java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-							PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
-							JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
-							pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
-							pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
-							pemeriksaanDarah.setTanggalPengajuan(sqlDate);
-							pemeriksaanDarah.setHasil("Belum ada hasil");
-							pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
-							pemeriksaanDarah.setStatus(0);
-							pemeriksaanDarah.setTanggalPemeriksaan(null);
-							pemeriksaanDb.save(pemeriksaanDarah);
-							sedangPasien = this.getAllKamar().get(i).getIdPasien();
-						}
-						else if(!(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien())&&!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
+			
+			if(!(this.findByIdPasien(this.getAllKamar().get(i).getIdPasien()) != null)) {
+				if(listPemeriksaan.size()==0) {
+					java.util.Date utilDate = new java.util.Date();
+					java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+					PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+					JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
+					pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+					pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+					pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+					pemeriksaanDarah.setHasil("Belum ada hasil");
+					pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+					pemeriksaanDarah.setStatus(0);
+					pemeriksaanDarah.setTanggalPemeriksaan(sqlDate);
+					pemeriksaanDb.save(pemeriksaanDarah);
+					sedangPasien = this.getAllKamar().get(i).getIdPasien();
+				}
+				else {
+					for(PemeriksaanModel pemeriksaan : listPemeriksaan) {
+						if(!(sedangPasien==this.getAllKamar().get(i).getIdPasien())) {
+							if(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien()&&!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
 								java.util.Date utilDate = new java.util.Date();
 								java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 								PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
@@ -153,14 +142,60 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 								pemeriksaanDarah.setHasil("Belum ada hasil");
 								pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
 								pemeriksaanDarah.setStatus(0);
-								pemeriksaanDarah.setTanggalPemeriksaan(null);
+								pemeriksaanDarah.setTanggalPemeriksaan(sqlDate);
 								pemeriksaanDb.save(pemeriksaanDarah);
-								sedangPasien = this.getAllKamar().get(i).getIdPasien();						
-						}
-					}
-					
+								sedangPasien = this.getAllKamar().get(i).getIdPasien();
+							}
+							else if(!(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien())&&pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
+								java.util.Date utilDate = new java.util.Date();
+								java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+								PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+								JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
+								pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+								pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+								pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+								pemeriksaanDarah.setHasil("Belum ada hasil");
+								pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+								pemeriksaanDarah.setStatus(0);
+								pemeriksaanDarah.setTanggalPemeriksaan(sqlDate);
+								pemeriksaanDb.save(pemeriksaanDarah);
+								sedangPasien = this.getAllKamar().get(i).getIdPasien();
+							}
+							else if(!(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien())&&!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
+									java.util.Date utilDate = new java.util.Date();
+									java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+									PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+									JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
+									pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+									pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+									pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+									pemeriksaanDarah.setHasil("Belum ada hasil");
+									pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+									pemeriksaanDarah.setStatus(0);
+									pemeriksaanDarah.setTanggalPemeriksaan(sqlDate);
+									pemeriksaanDb.save(pemeriksaanDarah);
+									sedangPasien = this.getAllKamar().get(i).getIdPasien();
+								}
+								else if(!(this.getAllKamar().get(i).getIdPasien()==pemeriksaan.getIdPasien())&&!pemeriksaan.getJenisPemeriksaan().getNama().equals("Darah")) {
+										java.util.Date utilDate = new java.util.Date();
+										java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+										PemeriksaanModel pemeriksaanDarah = new PemeriksaanModel();
+										JenisPemeriksaanModel jenisPemeriksaanDarah = jenisPemeriksaanDb.findById(12);
+										pemeriksaanDarah.setIdPasien(this.getAllKamar().get(i).getIdPasien());
+										pemeriksaanDarah.setJenisPemeriksaan(jenisPemeriksaanDarah);
+										pemeriksaanDarah.setTanggalPengajuan(sqlDate);
+										pemeriksaanDarah.setHasil("Belum ada hasil");
+										pemeriksaanDarah.setJadwalJaga(jadwalJagaDb.getOne(1));
+										pemeriksaanDarah.setStatus(0);
+										pemeriksaanDarah.setTanggalPemeriksaan(sqlDate);
+										pemeriksaanDb.save(pemeriksaanDarah);
+										sedangPasien = this.getAllKamar().get(i).getIdPasien();						
+								}
+							}
+					}	
 				}
 			}
+				
 			else {
 			}
 		}
@@ -188,5 +223,28 @@ public class PemeriksaanServiceImpl implements PemeriksaanService{
 		// TODO Auto-generated method stub
 		pemeriksaanDb.delete(pemeriksaan);
 		
+	}
+
+	@Override
+	public Integer  cekPemeriksaanTerbaru() {
+		int jumlah_inbox = 0;
+		long millis=System.currentTimeMillis();  
+		long diffInMillies =0;
+		long diff = 0;
+		for(PemeriksaanModel a : pemeriksaanDb.findAll()) {
+			diffInMillies = Math.abs(millis - a.getTanggalPemeriksaan().getTime());
+			diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if(diff==0) {
+				jumlah_inbox +=1;
+			}
+		}
+		return jumlah_inbox;
+		
+	}
+
+	@Override
+	public List<PemeriksaanModel> findByIdPasien(int id) {
+		// TODO Auto-generated method stub
+		return pemeriksaanDb.findByIdPasien(id);
 	}
 }

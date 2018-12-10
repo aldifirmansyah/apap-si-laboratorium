@@ -12,12 +12,12 @@
 			<br>
 			<div class="container vertical-center" style="padding-top:32px;">
 
-	<!-- Button tambah baru untuk role STAFF -->
-	<div th:if="${role} == 'STAFF'">		
-		<!-- Create Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createReagenModal">
-		  Tambah Baru
-		</button>
+				<!-- Button tambah baru untuk role STAFF -->
+				<div th:if="${role} == 'STAFF'">		
+					<!-- Create Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createReagenModal">
+					  Tambah Baru
+					</button>
 		
 		<!-- Modal -->
 		<div class="modal fade" id="createReagenModal" tabindex="-1" role="dialog" aria-labelledby="createReagenModalLabel" aria-hidden="true">
@@ -54,7 +54,7 @@
 		<!-- /Modal -->
 	</div>
 	<!-- /Button tambah untuk STAFF -->
-
+ 			<div class="container vertical-center" style="padding-top:32px;">
 		        <div class="table-responsive table">
 		        	<table class="table table-hover" id="myTable">
 		        		<thead>		        	
@@ -62,6 +62,7 @@
 							<th>Jumlah Reagen</th>
 							<th>Status Reagen</th>
 							<th>Tanggal Perubahan Status</th>
+							<th></th>
 		        		</thead>
 		        		<tbody>
 		     			<tr th:each="reagen : *{listKebutuhanReagen}">
@@ -72,13 +73,15 @@
 								<div th:if="${reagen.status==1}" th:text="'Tidak Aktif/Telah dibeli'"></div>
 							</td>
 							<td th:text="${reagen.tanggalUpdate}"></td>
-							<div th:if="${role} == 'ADMIN' and ${reagen.status} == 0">
-								<td>
+							
+							<td>
+								<div th:if="${role == 'ADMIN'} and ${reagen.status} == 0">
 									<form id="update" th:action="@{/lab/kebutuhan/ubah/} + ${reagen.id}" method="GET">
 										<button id="updateButton" class="btn btn-danger" type="submit">Update</button>	
 									</form>
-								</td>
-							</div>
+								</div>
+							</td>
+							
 						</tr>
 		     		</tbody>
 		        	</table>
@@ -86,5 +89,12 @@
 		    </div>
 		</div>
 	</div>
+	<script type="text/javascript">
+    	$(document).ready(function(e){
+    		$(myTable).DataTable()
+    	});
+    </script>
+</div>
+	
 </body>
 </html>
