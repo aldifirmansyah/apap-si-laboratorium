@@ -73,9 +73,9 @@ public class PemeriksaanController {
 	
 	@RequestMapping(value = "/lab/pemeriksaan/permintaan", method = RequestMethod.GET)
 	public String viewAllPemeriksaan(Model model) throws ParseException {
-		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.findAll();
 		pemeriksaanService.addPemeriksaanDarah();
-		System.out.println("masuk sini");
+		List<PemeriksaanModel> listPemeriksaan = pemeriksaanService.findAll();
+		
 		Map<Integer, PasienDetail> mapPasien = pemeriksaanService.getPatient();
 		
 		if(listPemeriksaan.size()==0) {
