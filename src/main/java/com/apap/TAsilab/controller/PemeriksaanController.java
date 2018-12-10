@@ -1,11 +1,7 @@
 package com.apap.TAsilab.controller;
 
-
-
 import java.util.List;
 import java.util.Map;
-
-
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +23,6 @@ import com.apap.TAsilab.model.PemeriksaanModel;
 import com.apap.TAsilab.rest.BaseResponse;
 import com.apap.TAsilab.rest.HasilLab;
 
-import com.apap.TAsilab.rest.KamarDetail;
 import com.apap.TAsilab.rest.PasienDetail;
 import com.apap.TAsilab.service.JadwalJagaService;
 import com.apap.TAsilab.service.JenisPemeriksaanService;
